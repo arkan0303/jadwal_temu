@@ -12,9 +12,9 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://images.unsplash.com/photo-1717321677309-8916f9b0a1d6?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('images/buku_tamu.jpg');
             background-size: cover;
-            background-position: center;
+            background-position: center 70%; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -213,7 +213,7 @@
 
             <div class="form-row">
                 <div class="form-group-left">
-                    <label for="jumlah_orang">Jumlah Orang yang Hadir</label>
+                    <label for="jumlah_orang">Jumlah Orang </label>
                     <input type="number" id="jumlah_orang" name="jumlah_orang" required>
                 </div>
 

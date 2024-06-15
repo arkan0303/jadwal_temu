@@ -15,7 +15,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            background: white;
             color: #fff;
             overflow: hidden;
         }
@@ -25,7 +25,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: #3ABEF9;
             padding: 10px 0;
             position: fixed;
             top: 0;
@@ -39,13 +39,14 @@
             width: 50px;
             height: 50px;
             margin-right: 10px;
+            background: black;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
             transition: transform 0.3s;
 
         }
 
         .navbar p {
-            color: #f1c40f;
+            color: #ffff;
             font-size: 24px;
             margin: 0;
         }
@@ -61,14 +62,15 @@
         }
 
         .circle-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.2);
-        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.4); /* Warna latar belakang gelap */
+         }
+
 
         .circle {
             position: relative;
@@ -97,7 +99,7 @@
             margin-top: 15px;
             font-size: 20px;
             font-weight: bold;
-            color: #f1c40f;
+            color: black;
             text-align: center;
             transition: color 0.3s;
         }
@@ -144,7 +146,7 @@
 <body>
     <div class="navbar">
         <img src="images/logo.png" alt="">
-        <p>PT. PLN UP2B (Persero) KALTIMRA</p>
+        <p>PT. PLN UP2B (Persero) Kaltimara</p>
     </div>
 
     <div class="container">

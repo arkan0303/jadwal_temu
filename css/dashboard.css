@@ -4,7 +4,7 @@ body {
 }
 .navbar {
   color: white;
-  background-color: black;
+  background-color: #3abef9;
 }
 
 .logo {
@@ -16,6 +16,7 @@ body {
   width: 50px;
   height: 50px;
   margin-right: 10px;
+  background: black;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
   transition: transform 0.3s;
   margin-left: 260px;
@@ -63,7 +64,7 @@ body {
 }
 
 .menu:hover {
-  background-color: #009879;
+  background-color: #3abef9;
 }
 
 .content {
@@ -163,7 +164,7 @@ body {
 }
 
 .card-tamu-hari-ini {
-  background-color: #28a745;
+  background-color: #3abef9;
 }
 
 .card-petugas {

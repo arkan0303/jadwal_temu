@@ -78,13 +78,6 @@
                         </div>
                         <div class="card-title">Tamu Hari Ini</div>
                     </div>
-                    <div class="card card-petugas">
-                        <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <div class="card-value">3</div>
-                            <i style="font-size: 20px;" class="fa-solid fa-print"></i>
-                        </div>
-                        <div class="card-title">Petugas</div>
-                    </div>
                     <div class="card card-jadwal-temu">
                         <div style="display: flex; align-items: center; justify-content: space-between;">
                             <div class="card-value">2</div>

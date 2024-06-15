@@ -12,7 +12,7 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://images.unsplash.com/photo-1717321677309-8916f9b0a1d6?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('images/jadwal_temu.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -35,18 +35,18 @@
         }
 
         .container {
-            border: 1px solid #fff;
-            position: relative;
-            z-index: 2;
-            width: 600px;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Ubah opacity menjadi 0.5 untuk membuatnya transparan */
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
+    border: 1px solid #fff;
+    position: relative;
+    z-index: 2;
+    width: 600px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-height: 90vh; /
+    overflow-y: hidden; 
+}
+
 
         h2 {
             color: #fff;
