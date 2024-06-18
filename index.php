@@ -152,7 +152,7 @@
     <div class="container">
         <div class="circle-container">
             <div class="circle">
-                <a href="form_jadwa_janji_temu.php">
+                <a href="form_jadwal_janji_temu.php">
 
                     <img src="images/tangan.jpg" alt="Jadwal Janji Temu">
                 </a>

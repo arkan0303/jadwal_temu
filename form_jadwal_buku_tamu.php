@@ -35,17 +35,17 @@
         }
 
         .container {
-    border: 1px solid #fff;
-    position: relative;
-    z-index: 2;
-    width: 600px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    max-height: 90vh; /
-    overflow-y: hidden; 
-}
+            border: 1px solid #fff;
+            position: relative;
+            z-index: 2;
+            width: 600px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-height: 90vh; /
+            overflow-y: hidden; 
+        }
 
 
         h2 {
@@ -230,7 +230,7 @@
 
                 <div class="form-group-right" ">
                     <label for=" email">Photo</label>
-                    <input type="file" id="email" name="email" required class="file"">
+                    <input type="file" id="photo" name="photo" required class="file"">
                 </div>
             </div>
             <div style=" margin-top: 10px; display: flex; justify-content: center; gap: 20px">

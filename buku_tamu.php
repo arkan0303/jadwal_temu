@@ -85,51 +85,14 @@
             <i class="fa-solid fa-right-from-bracket"></i>
         </button>
     </nav>
-    <div class="sidebar">
-        <div class="profile">
-            <div class="user-icon">
-                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
-            </div>
-            <p style="font-weight: bold; font-size: 20px ">Nama Pengguna</p>
-        </div>
-        <ul>
-            <div class="menu" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
-                <div>
-                    <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-house-user"></i>
-                </div>
-                <li style="margin-top: 8px; font-size: 20px ; font-weight: bold"><a href="dashboard.php">Dashboard</a></li>
-            </div>
-            <div class="menu" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
-                <div>
-                    <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-calendar-days"></i>
-                </div>
-                <li style="margin-top: 8px; font-size: 20px ; font-weight: bold"><a href="jadwal_janji.php">Jadwal Janji</a></li>
-            </div>
-            <div class="menu active" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
-                <div>
-                    <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-book-bookmark"></i>
-                </div>
-                <li style="margin-top: 8px; font-size: 20px ; font-weight: bold"><a href="buku_tamu.php">Buku Tamu</a></li>
-            </div>
-            <div class="menu" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
-                <div>
-                    <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-user-tie"></i>
-                </div>
-                <li style="margin-top: 8px; font-size: 20px ; font-weight: bold"><a href="karyawan.php">Karyawan</a></li>
-            </div>
-            <div class="menu" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
-                <div>
-                    <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-print"></i>
-                </div>
-                <li style="margin-top: 8px; font-size: 20px ; font-weight: bold"><a href="petugas.php">Petugas</a></li>
-            </div>
-        </ul>
-    </div>
+    <!-- Sidebar -->
+    <?php include "./partials/_sidebar.php" ?>
+    <!-- Sidebar -->
     <div>
         <h1 style="margin-left: 260px; margin-top: 40px; font-weight: bold; font-size: 40px">Buku Tamu</h1>
         <div style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
             <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
-                <button id="tambahDataBtn" style=" width: 200px; height: 30px; border-radius: 5px "><i class="fa-solid fa-plus"></i>Tambah Data</button>
+                <button id="tambahDataBtn" style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;"><i class="fa-solid fa-plus"></i>Tambah Data</button>
             </div>
             <div>
                 <button style=" width: 200px; height: 30px; border-radius: 5px "><i class="fa-solid fa-address-book"></i>Rekapan Pengunjung</button>
@@ -151,8 +114,7 @@
                     <th>Tanggal</th>
                     <th>Jumlah Orang</th>
                     <th>Foto Tamu</th>
-                    <th>Edit</th>
-                    <th>Hapus</th>
+                    <th colspan="2" class="text-center">Cetak</th>
                 </tr>
             </thead>
             <tbody>
@@ -168,8 +130,8 @@
                     <td data-label="Tanggal">2023-06-08</td>
                     <td data-label="Jumlah Orang">1</td>
                     <td data-label="Foto Tamu"><img src="https://via.placeholder.com/50" alt="Foto John"></td>
-                    <td data-label="Edit"><button>Edit</button></td>
-                    <td data-label="Hapus"><button>Hapus</button></td>
+                    <td data-label="Edit"><button>PDF</button></td>
+                    <td data-label="Hapus"><button>Excel</button></td>
                 </tr>
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
