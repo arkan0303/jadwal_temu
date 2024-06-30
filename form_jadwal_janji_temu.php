@@ -13,7 +13,7 @@
             
         </div>
         <h2>Jadwal Janji Temu</h2>
-        <form method="POST" id="form_jadwal_janji_temu">
+        <form action="" method="POST" id="form_jadwal_janji_temu" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="form-group-left">
                     <label for="nama">Nama</label>
@@ -36,7 +36,7 @@
                     </select>
                 </div>
                 <div class="form-group-right">
-                    <label for="telepon">Telepon</label>
+                    <label for="telepon">No Hp Karyawan yang Dituju</label>
                     <input type="tel" id="telepon" name="telepon" required>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="form-group-right">
-                    <label for="email">Email</label>
+                    <label for="email">Email Anda</label>
                     <input type="email" id="email" name="email" required>
                 </div>
 
@@ -99,6 +99,8 @@
             </div>
         </form>
     </div>
+
+    <script src="./js/jadwal_temu.js"></script>
 </body>
 
 </html>
