@@ -10,7 +10,7 @@
     <div class="container">
         <div class="alert" style="display: none">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            
+            <strong id="message"></strong>
         </div>
         <h2>Jadwal Janji Temu</h2>
         <form action="" method="POST" id="form_jadwal_janji_temu" enctype="multipart/form-data">
@@ -78,7 +78,7 @@
             <div class="form-row">
                 <div class="form-group-left">
                     <label for="jumlah_orang">Jumlah Orang </label>
-                    <input type="number" id="jumlah_orang" name="jumlah_orang" required>
+                    <input type="number" step="1" min="1" id="jumlah_orang" name="jumlah_orang" required>
                 </div>
 
                 <div class="form-group-right">

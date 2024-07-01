@@ -90,6 +90,11 @@ select {
     color: #333;
 }
 
+.form-group-right input.error {
+    border-color: #f00;
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+}
+
 .file {
     padding: 10px;
     border-radius: 5px;

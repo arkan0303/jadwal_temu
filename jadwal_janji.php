@@ -1,4 +1,12 @@
 <?php 
+
+    session_start();
+    include_once "./php/config.php";
+    include_once "./funcs/guardFuncs.php";
+
+    checkAuth();
+    checkRole($conn, "Admin", getUniqueId());
+
     $pageTitle = "Jadwal Janji";
     $cssFiles = ["css/jadwal_janji.css", "css/dashboard.css"];
     $additionalLinks = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />'];
@@ -7,15 +15,9 @@
     include "./funcs/dateFuncs.php";
 ?>
 
-    <nav class="navbar">
-        <div class="logo">
-            <img src="images/logo.png" alt="">
-            <h1>PT.PLN(Persero) UP2B Kaltimra</h1>
-        </div>
-        <button class="logout-button">Logout
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-    </nav>
+    <!-- Navbar -->
+    <?php include "./partials/_navbar.php" ?>
+     <!-- Navbar -->
     <!-- Sidebar -->
     <?php include "./partials/_sidebar.php" ?>
     <!-- Sidebar -->
@@ -55,8 +57,8 @@
                     <th colspan="2" class="text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="data-container">
+                <!-- <tr>
                     <td data-label="No">1</td>
                     <td data-label="Nama">John Doe</td>
                     <td data-label="Alamat">Jl. Kebon Jeruk No. 5</td>
@@ -70,21 +72,24 @@
                     <td data-label="Foto Tamu"><img src="https://via.placeholder.com/50" alt="Foto John"></td>
                     <td data-label="Edit"><button>Setujui</button></td>
                     <td data-label="Hapus"><button class="decline">Tolak</button></td>
-                </tr>
+                </tr> -->
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
     </div>
-    <div style="margin-left: 550px " class="pagination">
-        <a href="#">&laquo;</a>
+    <div id="pagination" style="margin-left: 550px " class="pagination">
+        <!-- <a href="#">&laquo;</a>
         <a href="#">1</a>
         <a href="#" class="active">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
         <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <a href="#">&raquo;</a> -->
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/table_janji_temu.js"></script>
 </body>
 
 </html>
