@@ -5,6 +5,9 @@ const dataContainer = $('#data-container');
 const pagination = $('#pagination');
 const alertMsg = $('.alert');
 
+const JADWAL_JANJI = '/jadwal_janji.php';
+const BUKU_TAMU = '/buku_tamu.php';
+
 function loadData(page) {
     currentPage = page;
     let search = searchInput.val().trim();
@@ -22,47 +25,45 @@ function loadData(page) {
         success: function (response) {
             renderData(response);
         },
-        error: function () {
-            alertMsg
-                .css('display', 'block')
-                .addClass('failure')
-                .text('Failed to fetch data.');
-        },
     });
 }
 
 function renderData(response) {
     dataContainer.empty(); // Clear previous data
 
-    $.each(response.data, function (index, row) {
-        // Format appointment_date into Indonesian date format
-        let appointmentDate = formatDateIndonesian(row.appointment_date);
+    if (response.data.length > 0) {
+        $.each(response.data, function (index, row) {
+            // Format appointment_date into Indonesian date format
+            let appointmentDate = formatDateIndonesian(row.tanggal_janji);
 
-        let rowData = `
-            <tr>
-                <td data-label="No">${
-                    index + 1 + (currentPage - 1) * response.records_per_page
-                }</td>
-                <td data-label="Nama">${row.name}</td>
-                <td data-label="Alamat">${row.address}</td>
-                <td data-label="Jenis Kelamin">${
-                    row.gender === 'l' ? 'Laki-laki' : 'Perempuan'
-                }</td>
-                <td data-label="Telepon">${row.phone}</td>
-                <td data-label="Bertemu Dengan">${row.meeting_with}</td>
-                <td data-label="Keperluan">${row.purpose}</td>
-                <td data-label="Jam Masuk">${row.appointment_time}</td>
-                <td data-label="Tanggal">${appointmentDate}</td>
-                <td data-label="Jumlah Orang">${row.people_amount}</td>
-                <td data-label="Foto Tamu"><img src="${
-                    row.guest_photo
-                }" alt="Foto Tamu"></td>
-                <td data-label="Edit"><button>Setujui</button></td>
-                <td data-label="Hapus"><button class="decline">Tolak</button></td>
-            </tr>
-        `;
-        dataContainer.append(rowData);
-    });
+            let rowData = `
+                <tr>
+                    <td data-label="No">${
+                        index +
+                        1 +
+                        (currentPage - 1) * response.records_per_page
+                    }</td>
+                    <td data-label="Nama">${row.nama_tamu}</td>
+                    <td data-label="Alamat">${row.alamat}</td>
+                    <td data-label="Jenis Kelamin">${row.jenis_kelamin}</td>
+                    <td data-label="Telepon">${row.nomor_telepon}</td>
+                    <td data-label="Bertemu Dengan">${row.nama_karyawan}</td>
+                    <td data-label="Keperluan">${row.keperluan}</td>
+                    <td data-label="Jam Masuk">${row.jam_janji}</td>
+                    <td data-label="Tanggal">${appointmentDate}</td>
+                    <td data-label="Jumlah Orang">${row.jumlah_orang}</td>
+                    <td data-label="Foto Tamu"><img src="${
+                        row.foto
+                    }" alt="Foto Tamu"></td>
+                    ${renderActionRow(row.id, row.status)}
+                </tr>
+            `;
+
+            dataContainer.append(rowData);
+        });
+    } else {
+        dataContainer.append(renderNotFoundData(13));
+    }
 
     pagination.empty(); // Clear previous pagination
 
@@ -160,6 +161,60 @@ function formatDateIndonesian(dateStr) {
     let year = dateObj.getFullYear();
 
     return `${day} ${months[monthIndex]} ${year}`;
+}
+
+// Function for actions
+function renderActionRow(id, status) {
+    let result = '';
+
+    switch (status) {
+        case 'Menunggu':
+            result = `<td data-label="Edit"><button data-id="${id}" onclick="appointmentApproval(this, true)">Setujui</button></td>
+                    <td data-label="Hapus"><button class="decline" data-id="${id}" onclick="appointmentApproval(this, false)">Tolak</button></td>`;
+            break;
+        case 'Disetujui':
+            result = `<td colspan="2" style="text-align:center;"><span class="badge badge-success">${status}</span></td>`;
+            break;
+        case 'Ditolak':
+            result = `<td colspan="2" style="text-align:center;"><span class="badge badge-danger">${status}</span></td>`;
+            break;
+        default:
+            break;
+    }
+
+    return result;
+}
+
+function renderNotFoundData(colspan) {
+    return `<td colspan="${colspan}" style="text-align: center;font-weight: 600">Data tidak ditemukan.</td>`;
+}
+
+function appointmentApproval(event, isApprove) {
+    var approvalStatus = isApprove ? 'Disetujui' : 'Ditolak';
+    var id = $(event).data('id');
+
+    $.ajax({
+        url: '/php/approval_jadwal_temu.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            approval_status: approvalStatus,
+            id: parseInt(id),
+        },
+        success: function (response) {
+            $('.alert').css('display', 'block');
+            $('.alert').addClass('success');
+            $('.alert').removeClass('failure');
+            $('.alert #message').text(response.message);
+            loadData(currentPage);
+        },
+        error: function () {
+            $('.alert').css('display', 'block');
+            $('.alert').addClass('failure');
+            $('.alert').removeClass('success');
+            $('.alert #message').text('Approval failed');
+        },
+    });
 }
 
 // Initial load and event listeners

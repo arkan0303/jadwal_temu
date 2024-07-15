@@ -28,32 +28,34 @@
                 <div class="container-cards">
                     <div class="card card-total-tamu">
                         <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <div class="card-value">24</div>
+                            <div class="card-value" id="total-tamu">0</div>
                             <i style="font-size: 20px;" class="fa-solid fa-users"></i>
                         </div>
                         <div class="card-title">Total Tamu</div>
                     </div>
                     <div class="card card-tamu-hari-ini">
                         <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <div class="card-value">5</div>
+                            <div class="card-value" id="tamu-hari-ini">0</div>
                             <i style="font-size: 20px;" class="fa-solid fa-user"></i>
                         </div>
                         <div class="card-title">Tamu Hari Ini</div>
                     </div>
                     <div class="card card-jadwal-temu">
                         <div style="display: flex; align-items: center; justify-content: space-between;">
-                            <div class="card-value">2</div>
+                            <div class="card-value" id="jadwal-temu">0</div>
                             <i style="font-size: 20px;" class="fa-solid fa-clock"></i>
                         </div>
                         <div class="card-title">Jadwal janji temu</div>
                     </div>
                 </div>
                 <div style="margin-top: 2rem;">
-                    <i style="font-size: 30px;" class="fa-solid fa-arrows-rotate"></i>
+                    <i id="refreshButton" class="fa-solid fa-arrows-rotate refresh-button"></i>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="./js/dashboard_fetch_data.js"></script>
 </body>
 
 </html>

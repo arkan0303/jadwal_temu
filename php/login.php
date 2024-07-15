@@ -16,9 +16,19 @@ if (empty($password)) {
     return;
 } 
 
-$query = mysqli_query($conn, "SELECT email, password, role_id, unique_id FROM users WHERE email = '$email'");
+$query = mysqli_query($conn, "SELECT 'Admin' AS user_type, email, password, unique_id, username
+                                FROM `admin`
+                                WHERE email = '$email' OR username = '$email'
+                                UNION
+                                SELECT 'Staff' AS user_type, email, password, unique_id, username
+                                FROM `petugas`
+                                WHERE email = '$email' OR username = '$email'
+                                UNION
+                                SELECT 'Employee' AS user_type, email, password, unique_id, username
+                                FROM `karyawan`
+                                WHERE email = '$email' OR username = '$email'");
 if (mysqli_num_rows($query) === 0) {
-    echo "Email salah";
+    echo "Email / Username salah";
     return;
 }
 

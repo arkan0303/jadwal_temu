@@ -8,11 +8,15 @@ $offset = ($page - 1) * $records_per_page;
 
 $search_query = "";
 if (!empty($search)) {
-    $search_query = "AND (name LIKE '%$search%' OR address LIKE '%$search%')";
+    $search_query = "AND (jadwal_janji_temu.nama_tamu LIKE '%$search%' OR jadwal_janji_temu.alamat LIKE '%$search%')";
 }
 
 // Main query to fetch data
-$sql = "SELECT * FROM guest_appointments WHERE appointment_type = 'janji_temu' $search_query LIMIT $offset, $records_per_page";
+$sql = "SELECT jadwal_janji_temu.*, karyawan.nama_karyawan 
+        FROM jadwal_janji_temu 
+        LEFT JOIN karyawan ON jadwal_janji_temu.karyawan_id = karyawan.id 
+        WHERE 1 = 1 $search_query 
+        LIMIT $offset, $records_per_page";
 $result = $conn->query($sql);
 
 $data = [];
@@ -21,7 +25,10 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Count query to determine total records
-$count_sql = "SELECT COUNT(*) AS total FROM guest_appointments WHERE appointment_type = 'janji_temu' $search_query";
+$count_sql = "SELECT COUNT(*) AS total 
+              FROM jadwal_janji_temu 
+              LEFT JOIN karyawan ON jadwal_janji_temu.karyawan_id = karyawan.id 
+              WHERE 1 = 1 $search_query";
 $count_result = $conn->query($count_sql);
 $total_records = $count_result->fetch_assoc()['total'];
 $total_pages = ceil($total_records / $records_per_page);

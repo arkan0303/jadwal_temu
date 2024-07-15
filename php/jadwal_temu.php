@@ -1,7 +1,6 @@
 <?php
 
 include_once "./config.php";
-
 $nama = mysqli_escape_string($conn, $_POST['nama']);
 $alamat = mysqli_escape_string($conn, $_POST['alamat']);
 $jenis_kelamin = mysqli_escape_string($conn, $_POST['jenis_kelamin']);
@@ -12,6 +11,7 @@ $jam = mysqli_escape_string($conn, $_POST['jam']);
 $tanggal = mysqli_escape_string($conn, $_POST['tanggal']);
 $jumlah_orang = mysqli_escape_string($conn, $_POST['jumlah_orang']);
 $email = mysqli_escape_string($conn, $_POST['email']);
+$instansi = mysqli_escape_string($conn, $_POST['instansi']);
 
 if (!isset($_FILES['photo'])) {
     echo "Gambar tidak boleh kosong";
@@ -42,9 +42,11 @@ if (!move_uploaded_file($photo['tmp_name'], $uploadPath)) {
 
 $uploadPath = "php/".$uploadPath;
 
-$sql = "INSERT INTO guest_appointments 
-        (name, address, gender, phone, meeting_with, purpose, appointment_time, appointment_date, people_amount, guest_photo, email)
-        VALUES ('$nama', '$alamat', '$jenis_kelamin', '$telepon', '$karyawan', '$keperluan', '$jam', '$tanggal', $jumlah_orang, '$uploadPath', '$email')";
+$sql = "INSERT INTO jadwal_janji_temu 
+        (nama_tamu, alamat, jenis_kelamin, nomor_telepon, karyawan_id, keperluan, jam_janji, tanggal_janji, jumlah_orang, instansi, email_pemohon, foto) 
+        VALUES 
+        ('$nama', '$alamat', '$jenis_kelamin', '$telepon', $karyawan, '$keperluan', '$jam', '$tanggal', $jumlah_orang, '$instansi', '$email', '$uploadPath');
+";
 
 $query = mysqli_query($conn, $sql);
 

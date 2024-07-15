@@ -60,7 +60,8 @@ body {
     height: auto;
 }
 
-.styled-table button.decline {
+.styled-table button.decline,
+#confirm_modal button.decline {
     background-color: #ff0000;
     color: #ffffff;
     border: none;
@@ -69,11 +70,13 @@ body {
     border-radius: 5px;
 }
 
-.styled-table button.decline:hover {
+.styled-table button.decline:hover,
+#confirm_modal button.decline:hover {
     background-color: #cc0000;
 }
 
-.styled-table button {
+.styled-table button,
+#confirm_modal button {
     background-color: #009879;
     color: #ffffff;
     border: none;
@@ -82,7 +85,8 @@ body {
     border-radius: 5px;
 }
 
-.styled-table button:hover {
+.styled-table button:hover,
+#confirm_modal button:hover {
     background-color: #007a63;
 }
 
@@ -126,6 +130,11 @@ body {
 
 .text-center {
     text-align: center;
+}
+
+#confirm_modal #cancel_button {
+    background-color: #f1f1f1;
+    color: #222;
 }
 
 /* Responsive styling */

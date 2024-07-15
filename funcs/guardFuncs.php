@@ -8,27 +8,29 @@ function checkAuth() {
 }
 
 function checkRole($conn, $role_names, $unique_id) {
-    $user_query = mysqli_query($conn, "SELECT role_id FROM users WHERE unique_id = '$unique_id'");
-    $user_result = mysqli_fetch_assoc($user_query);
-    $role_id = $user_result['role_id'];
-    
-    $role_query = mysqli_query($conn, "SELECT name FROM roles WHERE id = '$role_id'");
-    $role_result = mysqli_fetch_assoc($role_query);
-
-    $user_role_name = $role_result['name'];
-
     if (is_array($role_names)) {
-        if (!in_array($user_role_name, $role_names)) {
-            header("location: /forbidden.php");
+        $users = [];
+        foreach ($role_names as $role_name) {
+            $role_name = strtolower($role_name);
+            $query = mysqli_query($conn, "SELECT unique_id FROM $role_name WHERE unique_id = '$unique_id'");
+            if (mysqli_num_rows($query) > 0) {
+                $row = mysqli_fetch_assoc($query);
+                $users[] = $row;
+            }
+        }
+
+        if (count($users) == 0) {
+            header("location: forbidden.php");
             exit;
         }
     } else {
-        if ($user_role_name !== $role_names) {
-            header("location: /forbidden.php");
+        $role_names = strtolower($role_names);
+        $query = mysqli_query($conn, "SELECT unique_id FROM $role_names WHERE unique_id = '$unique_id'");
+        if (mysqli_num_rows($query) == 0) {
+            header("location: forbidden.php");
             exit;
         }
     }
-
 }
 
 function getUniqueId() {

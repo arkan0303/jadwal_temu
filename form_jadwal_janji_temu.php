@@ -35,28 +35,28 @@
                         <option value="p">Perempuan</option>
                     </select>
                 </div>
+                
                 <div class="form-group-right">
-                    <label for="telepon">No Hp Karyawan yang Dituju</label>
-                    <input type="tel" id="telepon" name="telepon" required>
+                    <label for="karyawan">Karyawan yang Dituju</label>
+                    <?php 
+                        $karyawan_query = mysqli_query($conn, "SELECT id, nama_karyawan, nomor_telepon  FROM karyawan")
+                    ?>
+                    <select id="karyawan" name="karyawan" required onchange="phoneNumberFill()">
+                        <option value="" disabled selected>Pilih Karyawan</option>
+                        <?php if (mysqli_num_rows($karyawan_query) > 0) : ?>
+                            <?php while($row = mysqli_fetch_assoc($karyawan_query)) : ?>
+                                <option value="<?= $row['id']; ?>" data-phone="<?= $row['nomor_telepon']; ?>"><?= $row['nama_karyawan']; ?></option>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </select>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group-left">
-                    <label for="karyawan">Karyawan yang Dituju</label>
-                    <?php 
-                        $karyawan_query = mysqli_query($conn, "SELECT id, full_name FROM employees WHERE user_id IS NOT NULL")
-                    ?>
-                    <select id="karyawan" name="karyawan" required>
-                        <option value="" disabled selected>Pilih Karyawan</option>
-                        <?php if (mysqli_num_rows($karyawan_query) > 0) : ?>
-                            <?php while($row = mysqli_fetch_assoc($karyawan_query)) : ?>
-                                <option value="<?= $row['id']; ?>"><?= $row['full_name']; ?></option>
-                            <?php endwhile; ?>
-                        <?php endif; ?>
-                    </select>
+                    <label for="telepon">No Hp Karyawan yang Dituju</label>
+                    <input type="tel" id="telepon" name="telepon" required>
                 </div>
-
                 <div class="form-group-right">
                     <label for="keperluan">Keperluan</label>
                     <input type="text" id="keperluan" name="keperluan" required>
@@ -88,9 +88,13 @@
 
             </div>
             <div class="form-row">
-                <div class="form-group-right" ">
+                <div class="form-group-left">
                     <label for="photo">Photo</label>
                     <input type="file" id="photo" name="photo" required class="file">
+                </div>
+                <div class="form-group-right">
+                    <label for="photo">Instansi</label>
+                    <input type="text" id="instansi" name="instansi" required>
                 </div>
             </div>
             <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px">
@@ -99,8 +103,8 @@
             </div>
         </form>
     </div>
-
-    <script src="./js/jadwal_temu.js"></script>
+    
+    <script src="./js/tambah_reservasi_tamu.js"></script>
 </body>
 
 </html>
