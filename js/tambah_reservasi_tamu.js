@@ -37,7 +37,6 @@ form.onsubmit = (e) => {
 };
 
 submit.onclick = () => {
-    loadingState(true);
     let isValid = true;
     form.querySelectorAll('[required]').forEach((input) => {
         if (!input.value.trim()) {
@@ -55,6 +54,9 @@ submit.onclick = () => {
         return;
     }
 
+    submit.disabled = true;
+    submit.innerHTML = 'Loading...';
+
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'php/reservasi_tamu.php', true);
     xhr.onreadystatechange = () => {
@@ -64,6 +66,8 @@ submit.onclick = () => {
             alertMsg.classList.remove('success');
         }
         if (xhr.readyState === XMLHttpRequest.DONE) {
+            submit.disabled = false;
+            submit.innerHTML = 'Submit';
             alertMsg.style.display = 'block';
             if (xhr.responseText.toLowerCase().includes('berhasil')) {
                 alertMsg.classList.add('success');
@@ -72,7 +76,6 @@ submit.onclick = () => {
                 }, 1500);
             } else {
                 alertMsg.classList.add('failure');
-                loadingState(false);
             }
             msg.innerHTML = xhr.responseText;
         }
@@ -89,8 +92,8 @@ submit.onclick = () => {
     xhr.send(formData);
 };
 
-function loadingState(state, button) {
-    if (state) {
+function loadingState(state) {
+    if (state == true) {
         document.querySelectorAll('button').forEach((el) => {
             el.disabled = true;
         });
@@ -98,7 +101,7 @@ function loadingState(state, button) {
             'sending...';
     } else {
         document.querySelectorAll('button').forEach((el) => {
-            el.disabled = false;
+            el.removeAttribute('disabled');
         });
         document.querySelector("button[type='submit']").innerHTML = 'send';
     }

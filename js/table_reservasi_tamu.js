@@ -22,6 +22,8 @@ function loadData(page) {
     let search = searchInput.val().trim();
     let recordsPerPage = showSelect.val();
 
+    let type = getReservationType();
+
     $.ajax({
         url: '/php/fetch_reservasi_tamu.php',
         type: 'POST',
@@ -30,10 +32,10 @@ function loadData(page) {
             search: search,
             page: currentPage,
             records_per_page: recordsPerPage,
-            jenis_reservasi: getReservationType(),
+            jenis_reservasi: type,
         },
         success: function (response) {
-            renderData(response);
+            renderData(type, response);
         },
         error: function (response) {
             $('.alert').css('display', 'block');
@@ -44,42 +46,82 @@ function loadData(page) {
     });
 }
 
-function renderData(response) {
+function renderData(type, response) {
     dataContainer.empty(); // Clear previous data
-
     if (response.data.length > 0) {
-        $.each(response.data, function (index, row) {
-            // Format appointment_date into Indonesian date format
-            let appointmentDate = formatDateIndonesian(row.tanggal);
+        if (type === JANJI_TEMU_RESERVATION_TYPE) {
+            $.each(response.data, function (index, row) {
+                // Format appointment_date into Indonesian date format
+                let appointmentDate = formatDateIndonesian(row.tanggal);
 
-            let rowData = `
-                <tr>
-                    <td data-label="No">${
-                        index +
-                        1 +
-                        (currentPage - 1) * response.records_per_page
-                    }</td>
-                    <td data-label="Nama">${row.nama_tamu}</td>
-                    <td data-label="Nama">${row.email_pemohon}</td>
-                    <td data-label="Alamat">${row.alamat}</td>
-                    <td data-label="Jenis Kelamin">${
-                        row.jenis_kelamin === 'l' ? 'Laki-laki' : 'Perempuan'
-                    }</td>
-                    <td data-label="Telepon">${row.nomor_telepon}</td>
-                    <td data-label="Bertemu Dengan">${row.nama_karyawan}</td>
-                    <td data-label="Keperluan">${row.keperluan}</td>
-                    <td data-label="Jam Masuk">${row.jam}</td>
-                    <td data-label="Tanggal">${appointmentDate}</td>
-                    <td data-label="Jumlah Orang">${row.jumlah_orang}</td>
-                    <td data-label="Foto Tamu"><img src="${
-                        row.foto
-                    }" alt="Foto Tamu"></td>
-                    ${renderActionRow(row.id)}
-                </tr>
-            `;
+                let rowData = `
+                    <tr>
+                        <td data-label="No">${
+                            index +
+                            1 +
+                            (currentPage - 1) * response.records_per_page
+                        }</td>
+                        <td data-label="Nama">${row.nama_tamu}</td>
+                        <td data-label="Nama">${row.email_pemohon}</td>
+                        <td data-label="Alamat">${row.alamat}</td>
+                        <td data-label="Jenis Kelamin">${
+                            row.jenis_kelamin === 'l'
+                                ? 'Laki-laki'
+                                : 'Perempuan'
+                        }</td>
+                        <td data-label="Telepon">${row.nomor_telepon}</td>
+                        <td data-label="Bertemu Dengan">${
+                            row.nama_karyawan
+                        }</td>
+                        <td data-label="Keperluan">${row.keperluan}</td>
+                        <td data-label="Jam Masuk">${row.jam}</td>
+                        <td data-label="Tanggal">${appointmentDate}</td>
+                        <td data-label="Jumlah Orang">${row.jumlah_orang}</td>
+                        <td data-label="Foto Tamu"><img src="${
+                            row.foto
+                        }" alt="Foto Tamu"></td>
+                        ${renderActionRow(row.id)}
+                    </tr>
+                `;
 
-            dataContainer.append(rowData);
-        });
+                dataContainer.append(rowData);
+            });
+        } else {
+            $.each(response.data, function (index, row) {
+                let appointmentDate = formatDateIndonesian(row.tanggal);
+
+                let rowData = `
+                    <tr>
+                        <td data-label="No">${
+                            index +
+                            1 +
+                            (currentPage - 1) * response.records_per_page
+                        }</td>
+                        <td data-label="Nama">${row.nama_tamu}</td>
+                        <td data-label="Alamat">${row.alamat}</td>
+                        <td data-label="Jenis Kelamin">${
+                            row.jenis_kelamin === 'l'
+                                ? 'Laki-laki'
+                                : 'Perempuan'
+                        }</td>
+                        <td data-label="Telepon">${row.nomor_telepon}</td>
+                        <td data-label="Bertemu Dengan">${
+                            row.nama_karyawan
+                        }</td>
+                        <td data-label="Keperluan">${row.keperluan}</td>
+                        <td data-label="Jam Masuk">${row.jam}</td>
+                        <td data-label="Tanggal">${appointmentDate}</td>
+                        <td data-label="Jumlah Orang">${row.jumlah_orang}</td>
+                        <td data-label="Foto Tamu"><img src="${
+                            row.foto
+                        }" alt="Foto Tamu"></td>
+                        ${renderActionRow(row.id)}
+                    </tr>
+                `;
+
+                dataContainer.append(rowData);
+            });
+        }
     } else {
         dataContainer.append(renderNotFoundData(13));
     }
@@ -192,8 +234,7 @@ function renderActionRow(id) {
         result = `<td data-label="Edit"><button data-id="${id}" onclick="confirmationModal(${id}, true)">Setujui</button></td>
                     <td data-label="Hapus"><button class="decline" data-id="${id}" onclick="confirmationModal(${id}, false)">Tolak</button></td>`;
     } else {
-        result = `<td data-label="Edit"><button>PDF</button></td>
-                    <td data-label="Hapus"><button>Excel</button></td>`;
+        result = ``;
     }
 
     return result;

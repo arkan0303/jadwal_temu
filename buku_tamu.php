@@ -1,102 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php 
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buku Tamu</title>
-    <link rel="stylesheet" href="css/jadwal_janji.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* Modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
+    session_start();
+    include_once "./php/config.php";
+    include_once "./funcs/guardFuncs.php";
 
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 10px;
-        }
+    checkAuth();
+    checkRole($conn, "Admin", getUniqueId());
 
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
+    $pageTitle = "Buku Tamu";
+    $cssFiles = ["css/jadwal_janji.css", "css/dashboard.css", "css/badge.css", "css/alert.css", "css/modal.css", "css/buku_tamu.css"];
+    $additionalLinks = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />'];
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal input,
-        .modal select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin: 5px 0 20px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .modal button {
-            width: 100%;
-            background-color: #009879;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .modal button:hover {
-            background-color: #007a63;
-        }
-    </style>
-</head>
-
-<body>
-    <nav class="navbar">
-        <div class="logo">
-            <img src="images/logo.png" alt="">
-            <h1>PT.PLN(Persero) UP2B Kaltimra</h1>
-        </div>
-        <button class="logout-button">Logout
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </button>
-    </nav>
+    include "./layouts/header.php";
+    include "./funcs/dateFuncs.php";
+?>
+    <!-- Navbar -->
+    <?php include "./partials/_navbar.php" ?>
+     <!-- Navbar -->
     <!-- Sidebar -->
     <?php include "./partials/_sidebar.php" ?>
     <!-- Sidebar -->
     <div>
         <h1 style="margin-left: 260px; margin-top: 40px; font-weight: bold; font-size: 40px">Buku Tamu</h1>
         <div style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
-            <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
+            <!-- <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
                 <button id="tambahDataBtn" style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;"><i class="fa-solid fa-plus"></i>Tambah Data</button>
+            </div> -->
+            <div class="dropdown">
+                <button class="dropbtn">Export</button>
+                <div class="dropdown-content">
+                    <a href="#" id="exportExcel">Excel</a>
+                    <a href="#" id="exportPdf">PDF</a>
+                </div>
             </div>
-            <div>
-                <button style=" width: 200px; height: 30px; border-radius: 5px "><i class="fa-solid fa-address-book"></i>Rekapan Pengunjung</button>
-            </div>
+            <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
+                    <p style="font-weight: bold; font-size: 20px; ">show</p>
+                    <select name="show" id="show" style="width: 60px; height: 30px; border-radius: 5px">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <p style="font-weight: bold; font-size: 20px; ">entries</p>
+                </div>
+                <div>
+                    <input type="text" id="search" name="search" placeholder="Cari..." style="width: 200px; height: 30px; border-radius: 5px; margin-left: 260px; margin-top: 10px; padding-left: 10px">
+                </div>
         </div>
     </div>
     <div class="table-container">
@@ -117,8 +66,8 @@
                     <th colspan="2" class="text-center">Cetak</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="data-container">
+                <!-- <tr>
                     <td data-label="No">1</td>
                     <td data-label="Nama">John Doe</td>
                     <td data-label="Alamat">Jl. Kebon Jeruk No. 5</td>
@@ -132,83 +81,54 @@
                     <td data-label="Foto Tamu"><img src="https://via.placeholder.com/50" alt="Foto John"></td>
                     <td data-label="Edit"><button>PDF</button></td>
                     <td data-label="Hapus"><button>Excel</button></td>
-                </tr>
+                </tr> -->
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
     </div>
-    <div style="margin-left: 550px " class="pagination">
-        <a href="#">&laquo;</a>
+    <div id="pagination" style="margin-left: 550px " class="pagination">
+        <!-- <a href="#">&laquo;</a>
         <a href="#">1</a>
         <a href="#" class="active">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
         <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <a href="#">&raquo;</a> -->
     </div>
 
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form id="tambahDataForm">
-                <h2>Tambah Data</h2>
-                <label for="nama">Nama:</label>
-                <input type="text" id="nama" name="nama" required>
-                <label for="alamat">Alamat:</label>
-                <input type="text" id="alamat" name="alamat" required>
-                <label for="jenisKelamin">Jenis Kelamin:</label>
-                <select id="jenisKelamin" name="jenisKelamin" required>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
-                <label for="telepon">Telepon:</label>
-                <input type="tel" id="telepon" name="telepon" required>
-                <label for="bertemuDengan">Bertemu Dengan:</label>
-                <input type="text" id="bertemuDengan" name="bertemuDengan" required>
-                <label for="keperluan">Keperluan:</label>
-                <input type="text" id="keperluan" name="keperluan" required>
-                <label for="jamMasuk">Jam Masuk:</label>
-                <input type="time" id="jamMasuk" name="jamMasuk" required>
-                <label for="tanggal">Tanggal:</label>
-                <input type="date" id="tanggal" name="tanggal" required>
-                <label for="jumlahOrang">Jumlah Orang:</label>
-                <input type="number" id="jumlahOrang" name="jumlahOrang" required>
-                <label for="fotoTamu">Foto Tamu:</label>
-                <input type="file" id="fotoTamu" name="fotoTamu" accept="image/*" required>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("tambahDataBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 </body>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/modal.js" defer></script>
+    <script src="./js/table_reservasi_tamu.js" defer></script>
+    <script>
+        // script.js
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdown = document.querySelector('.dropdown');
+            
+            dropbtn.addEventListener('click', function() {
+                dropdown.classList.toggle('show');
+            });
+
+            document.getElementById('exportExcel').addEventListener('click', function() {
+                window.location.href = 'php/export_excel.php';
+            });
+
+            document.getElementById('exportPdf').addEventListener('click', function() {
+                window.location.href = 'php/export_pdf.php';
+            });
+            
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                }
+            }
+        });
+
+    </script>
 </html>

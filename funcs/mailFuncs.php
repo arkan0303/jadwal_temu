@@ -3,9 +3,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../phpmailer/src/Exception.php';
-require '../phpmailer/src/PHPMailer.php';
-require '../phpmailer/src/SMTP.php';
+require '../vendor/autoload.php';
 
 const SUCCESS_EMAIL = "success_email";
 const APPROVED_EMAIL = "approved_email";
