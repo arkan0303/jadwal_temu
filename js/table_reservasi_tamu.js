@@ -309,6 +309,27 @@ function appointmentApproval(id, isApprove) {
             $('.alert #message').text(response.message);
             $('#confirm_modal').css('display', 'none');
             loadData(currentPage);
+
+            if (isApprove) {
+                // Fetch phone number and convert to international format if needed
+                var phoneNumber = response.phone; // Replace with your input ID
+                var namaKaryawan = response.nama_karyawan;
+                var namaTamu = response.nama_tamu;
+                var tanggal = response.tanggal;
+                var jam = response.jam;
+                var keperluan = response.keperluan;
+                if (phoneNumber.startsWith('08')) {
+                    phoneNumber = '+62' + phoneNumber.substring(1);
+                }
+
+                var message = `Hallo ${namaKaryawan}, kami menerima permintaan perjanjian janji temu dengan Anda. Dengan nama tamu ${namaTamu} pada ${tanggal} jam ${jam} WIB dengan keperluan ${keperluan}`;
+                var whatsappUrl =
+                    'https://wa.me/' +
+                    phoneNumber +
+                    '?text=' +
+                    encodeURIComponent(message);
+                window.location.href = whatsappUrl;
+            }
         },
         error: function () {
             $('#confirm_button, #cancel_button').prop('disabled', false);

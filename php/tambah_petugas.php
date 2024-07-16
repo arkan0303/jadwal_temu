@@ -14,7 +14,6 @@ $password = mysqli_real_escape_string($conn, $_POST['password']);
 $nip = mysqli_real_escape_string($conn, $_POST['nip']);
 $phone = mysqli_real_escape_string($conn, $_POST['telpon']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
-$jabatan = mysqli_real_escape_string($conn, $_POST['departemen']);
 $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
 $shift = mysqli_real_escape_string($conn, $_POST['shift']);
 
@@ -24,7 +23,6 @@ notBlank($password, "Password");
 notBlank($email, "Email");
 notBlank($nip, "NIP");
 notBlank($phone, "Nomor Telepon");
-notBlank($jabatan, "Departemen");
 notBlank($shift, "Shift");
 
 $checkEmail = $conn->prepare("SELECT email FROM petugas WHERE email = ?");
@@ -51,9 +49,9 @@ $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 $unique_id = uniqid().microtime();
 
-$insertSql = "INSERT INTO petugas (username, password, email, nama_karyawan, nip, jabatan, alamat, unique_id, nomor_telepon, shift) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$insertSql = "INSERT INTO petugas (username, password, email, nama_petugas, nip, alamat, unique_id, nomor_telepon, shift) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 $insertStmt = $conn->prepare($insertSql);
-$insertStmt->bind_param("ssssssssss", $username, $hashedPassword, $email, $namaKaryawan, $nip, $jabatan, $alamat, $unique_id, $phone, $shift);
+$insertStmt->bind_param("sssssssss", $username, $hashedPassword,  $email, $namaPetugas, $nip, $alamat, $unique_id, $phone, $shift);
 
 if (!$insertStmt->execute()) {
     echo "Gagal membuat data";

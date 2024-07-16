@@ -51,11 +51,10 @@
                     <th>No Telepon</th>
                     <th>Email</th>
                     <th>Departemen</th>
-                    <th colspan="2" class="text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="data-container">
+                <!-- <tr>
                     <td data-label="No">1</td>
                     <td data-label="Nama Karyawan">John Doe</td>
                     <td data-label="NIP">123456</td>
@@ -64,20 +63,20 @@
                     <td data-label="Departemen">HR</td>
                     <td data-label="Edit"><button>Edit</button></td>
                     <td data-label="Hapus"><button>Hapus</button></td>
-                </tr>
+                </tr> -->
                 <!-- Tambahkan baris lainnya sesuai kebutuhan -->
             </tbody>
         </table>
     </div>
-    <div style="margin-left: 850px" class="pagination">
-        <a href="#">&laquo;</a>
+    <div id="pagination" style="margin-left: 850px" class="pagination">
+        <!-- <a href="#">&laquo;</a>
         <a href="#">1</a>
         <a href="#" class="active">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
         <a href="#">6</a>
-        <a href="#">&raquo;</a>
+        <a href="#">&raquo;</a> -->
     </div>
 
     <!-- Modal -->
@@ -116,6 +115,7 @@
     <script src="./js/modal.js" defer></script>
     <script src="./js/form_util.js"></script>
     <script src="./js/tambah_karyawan.js"></script>
+    <script src="./js/fetch_data_karyawan.js"></script>
 </body>
 
 </html>

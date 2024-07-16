@@ -17,6 +17,7 @@ submit.onclick = () => {
             alertMessage.classList.remove('failure');
         }
         if (xhr.readyState === XMLHttpRequest.DONE) {
+            document.getElementById('myModal').scrollTo(0, 0);
             alertMessage.style.display = 'block';
             if (xhr.responseText.toLowerCase().includes('berhasil')) {
                 alertMessage.classList.add('success');

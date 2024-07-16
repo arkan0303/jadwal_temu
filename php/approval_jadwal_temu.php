@@ -32,7 +32,8 @@ if ($approval_status == 'true') {
                                             rt.email_pemohon, 
                                             rt.created_at, 
                                             rt.updated_at, 
-                                            k.nama_karyawan
+                                            k.nama_karyawan,
+                                            k.nomor_telepon AS kary_nomor_telepon
                                         FROM 
                                             reservasi_tamu rt
                                         LEFT JOIN 
@@ -50,7 +51,14 @@ if ($approval_status == 'true') {
             'jumlahOrang' => $getOneRes['jumlah_orang'],
         ];
         sendEmail(APPROVED_EMAIL, $getOneRes['email_pemohon'], $getOneRes['nama_tamu'], $additionalData);
-        echo json_encode(['message'=> 'Berhasil menyetujui data']);
+        echo json_encode(['message'=> 'Berhasil menyetujui data', 
+                            'nama_karyawan' => $getOneRes['nama_karyawan'], 
+                            'phone' => $getOneRes['kary_nomor_telepon'],
+                            'nama_tamu' => $getOneRes['nama_tamu'],
+                            'tanggal' => $getOneRes['tanggal'],
+                            'jam' => $getOneRes['jam'],
+                            'keperluan' => $getOneRes['keperluan']
+                        ]);
         exit;
     }
 } else {
