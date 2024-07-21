@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./images/logo.jpg">
+    <link rel="icon" href="./images/pln.jpg">
     <title><?php echo $pageTitle; ?></title>
     <?php
         // Include CSS files if any are provided

@@ -21,18 +21,19 @@
     <?php include "./partials/_sidebar.php" ?>
     <!-- Sidebar -->
     <div>
-        <h1 style="margin-left: 260px; margin-top: 40px; font-weight: bold; font-size: 40px">Buku Tamu</h1>
-        <div style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
-            <!-- <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
-                <button id="tambahDataBtn" style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;"><i class="fa-solid fa-plus"></i>Tambah Data</button>
-            </div> -->
-            <div class="dropdown">
-                <button class="dropbtn">Export</button>
+        <h1 class="b" style="">Buku Tamu</h1>
+        <div class="dropdown">
+                <button class="dropbtn">Rekapan Pengunjung</button>
                 <div class="dropdown-content">
                     <a href="#" id="exportExcel">Excel</a>
                     <a href="#" id="exportPdf">PDF</a>
                 </div>
             </div>
+        <div class="con" style="">
+            <!-- <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
+                <button id="tambahDataBtn" style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;"><i class="fa-solid fa-plus"></i>Tambah Data</button>
+            </div> -->
+            
             <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
                     <p style="font-weight: bold; font-size: 20px; ">show</p>
                     <select name="show" id="show" style="width: 60px; height: 30px; border-radius: 5px">
@@ -43,8 +44,8 @@
                     </select>
                     <p style="font-weight: bold; font-size: 20px; ">entries</p>
                 </div>
-                <div>
-                    <input type="text" id="search" name="search" placeholder="Cari..." style="width: 200px; height: 30px; border-radius: 5px; margin-left: 260px; margin-top: 10px; padding-left: 10px">
+                <div class="sss">
+                    <input type="text" id="search" name="search" class="sea" placeholder="Cari..." style="">
                 </div>
         </div>
     </div>
@@ -86,7 +87,7 @@
             </tbody>
         </table>
     </div>
-    <div id="pagination" style="margin-left: 550px " class="pagination">
+    <div id="pagination" style="" class="pagination">
         <!-- <a href="#">&laquo;</a>
         <a href="#">1</a>
         <a href="#" class="active">2</a>
