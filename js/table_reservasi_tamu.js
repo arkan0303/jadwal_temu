@@ -104,7 +104,6 @@ function renderData(type, response) {
                                 ? 'Laki-laki'
                                 : 'Perempuan'
                         }</td>
-                        <td data-label="Telepon">${row.nomor_telepon}</td>
                         <td data-label="Bertemu Dengan">${
                             row.nama_karyawan
                         }</td>
@@ -115,7 +114,7 @@ function renderData(type, response) {
                         <td data-label="Foto Tamu"><img src="${
                             row.foto
                         }" alt="Foto Tamu"></td>
-                        ${renderActionRow(row.id)}
+                        ${renderActionRow(row.id, row.nama_tamu)}
                     </tr>
                 `;
 
@@ -225,7 +224,7 @@ function formatDateIndonesian(dateStr) {
 }
 
 // Function for actions
-function renderActionRow(id) {
+function renderActionRow(id, name = null) {
     let result = '';
 
     const reservation = getReservationType();
@@ -234,13 +233,13 @@ function renderActionRow(id) {
         result = `<td data-label="Edit"><button data-id="${id}" onclick="confirmationModal(${id}, true)">Setujui</button></td>
                     <td data-label="Hapus"><button class="decline" data-id="${id}" onclick="confirmationModal(${id}, false)">Tolak</button></td>`;
     } else {
-        result = ``;
+        result = `<td style="display:flex;align-items:center;gap:5px"> <button data-id="${id}" onclick="fetchOneBukuTamu(event)">Edit</button> <button class="decline" data-name="${name}" data-id="${id}" onclick="openDeleteModal(event)">Hapus</button> </td>`;
     }
 
     return result;
 }
 
-// Function for modal
+// Function for approval modal
 function confirmationModal(id, apprStatus) {
     const confirmText = document.getElementById('confirm_text');
     const confirmBtn = document.getElementById('confirm_button');

@@ -60,5 +60,4 @@ form.onsubmit = (e) => {
     let formData = new FormData(form);
     formData.append('tipe_reservasi', 'buku_tamu');
     xhr.send(formData);
-    console.log('Form data sent');
 };

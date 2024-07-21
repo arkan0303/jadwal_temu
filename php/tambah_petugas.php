@@ -10,7 +10,6 @@ checkRole($conn, "admin", getUniqueId());
 
 $namaPetugas = mysqli_real_escape_string($conn, $_POST['nama']);
 $username = mysqli_real_escape_string($conn, $_POST['username']);
-$password = mysqli_real_escape_string($conn, $_POST['password']);
 $nip = mysqli_real_escape_string($conn, $_POST['nip']);
 $phone = mysqli_real_escape_string($conn, $_POST['telpon']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -19,11 +18,12 @@ $shift = mysqli_real_escape_string($conn, $_POST['shift']);
 
 notBlank($namaPetugas, "Nama Petugas");
 notBlank($username, "Username");
-notBlank($password, "Password");
 notBlank($email, "Email");
 notBlank($nip, "NIP");
 notBlank($phone, "Nomor Telepon");
 notBlank($shift, "Shift");
+
+$password = "password";
 
 $checkEmail = $conn->prepare("SELECT email FROM petugas WHERE email = ?");
 $checkEmail->bind_param("s", $email);

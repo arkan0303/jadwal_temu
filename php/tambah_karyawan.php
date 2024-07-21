@@ -10,7 +10,6 @@ checkRole($conn, "admin", getUniqueId());
 
 $namaKaryawan = mysqli_real_escape_string($conn, $_POST['nama']);
 $username = mysqli_real_escape_string($conn, $_POST['username']);
-$password = mysqli_real_escape_string($conn, $_POST['password']);
 $nip = mysqli_real_escape_string($conn, $_POST['nip']);
 $phone = mysqli_real_escape_string($conn, $_POST['telpon']);
 $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -19,11 +18,12 @@ $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
 
 notBlank($namaKaryawan, "Nama Karyawan");
 notBlank($username, "Username");
-notBlank($password, "Password");
 notBlank($email, "Email");
 notBlank($nip, "NIP");
 notBlank($phone, "Nomor Telepon");
 notBlank($jabatan, "Departemen");
+
+$password = "password";
 
 $checkEmail = $conn->prepare("SELECT email FROM karyawan WHERE email = ?");
 $checkEmail->bind_param("s", $email);

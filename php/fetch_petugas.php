@@ -11,7 +11,7 @@ if (!empty($search)) {
     $search_query = "AND (nama_petugas LIKE '%$search%' OR email LIKE '%$search%')";
 }
 
-$sql = "SELECT nama_petugas, shift, nomor_telepon, email FROM petugas
+$sql = "SELECT id, nama_petugas, shift, nomor_telepon, email FROM petugas
         WHERE 1 = 1 $search_query LIMIT $offset, $records_per_page";
 $result = $conn->query($sql);
 

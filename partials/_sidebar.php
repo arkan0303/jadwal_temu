@@ -1,4 +1,5 @@
-<?php 
+<?php
+
     /* URI names */
     const DASHBOARD = "/dashboard.php";
     const JADWAL_JANJI = "/jadwal_janji.php";
@@ -9,6 +10,14 @@
     function checkURI($uri) {
         return $_SERVER['REQUEST_URI'] === $uri ? "active" : "";
     }
+
+    $unique_id = getUniqueId();
+    $query = mysqli_query($conn, "SELECT nama_admin AS nama_pengguna FROM admin WHERE unique_id = '$unique_id'
+                                UNION
+                                SELECT nama_karyawan AS nama_pengguna FROM karyawan WHERE unique_id = '$unique_id'
+                                UNION
+                                SELECT nama_petugas AS nama_pengguna FROM petugas WHERE unique_id = '$unique_id'");
+    $row = mysqli_fetch_assoc($query);
 ?>
 
 <div class="sidebar">
@@ -16,7 +25,7 @@
         <div class="user-icon">
             <img src="./images/no-user.png" alt="">
         </div>
-        <p style="font-weight: bold; font-size: 20px">Nama Pengguna</p>
+        <p style="font-weight: bold; font-size: 20px"><?= $row['nama_pengguna']; ?></p>
     </div>
     <ul>
         <div class="menu <?= checkURI(DASHBOARD); ?>" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">

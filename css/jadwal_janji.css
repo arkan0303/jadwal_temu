@@ -238,7 +238,7 @@ body {
     .modal input,
     .modal select {
         width: calc(100% - 22px);
-        padding: 10px;
+        padding: 10px !important;
         margin: 5px 0 20px 0;
         display: inline-block;
         border: 1px solid #ccc;
