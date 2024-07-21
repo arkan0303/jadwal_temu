@@ -80,7 +80,7 @@
             </tbody>
         </table>
     </div>
-    <div id="pagination" style="margin-left: 550px " class="pagination">
+    <div id="pagination" style="" class="pagination">
         <!-- <a href="#">&laquo;</a>
         <a href="#">1</a>
         <a href="#" class="active">2</a>

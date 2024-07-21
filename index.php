@@ -139,13 +139,17 @@
             .description {
                 font-size: 18px;
             }
+            .navbar p {
+                font-size: 15px;
+
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="navbar">
-        <img src="images/logo.png" alt="">
+        <img src="images/pln.jpg" alt="">
         <p>PT. PLN UP2B (Persero) Kaltimara</p>
     </div>
 

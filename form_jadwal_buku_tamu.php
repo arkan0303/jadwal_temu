@@ -6,6 +6,7 @@
     include "./php/config.php";
     include "./layouts/header.php";
 ?>
+<body>
     <div class="overlay"></div>
     <div class="container">
         <div class="alert" style="display: none">
