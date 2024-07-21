@@ -42,11 +42,11 @@
                     <?php 
                         $karyawan_query = mysqli_query($conn, "SELECT id, nama_karyawan, nomor_telepon  FROM karyawan")
                     ?>
-                    <select id="karyawan" name="karyawan" required onchange="phoneNumberFill()">
+                    <select id="karyawan" name="karyawan" required>
                         <option value="" disabled selected>Pilih Karyawan</option>
                         <?php if (mysqli_num_rows($karyawan_query) > 0) : ?>
                             <?php while($row = mysqli_fetch_assoc($karyawan_query)) : ?>
-                                <option value="<?= $row['id']; ?>" data-phone="<?= $row['nomor_telepon']; ?>"><?= $row['nama_karyawan']; ?></option>
+                                <option value="<?= $row['id']; ?>"><?= $row['nama_karyawan']; ?></option>
                             <?php endwhile; ?>
                         <?php endif; ?>
                     </select>
@@ -54,10 +54,6 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group-left">
-                    <label for="telepon">No Hp Karyawan yang Dituju</label>
-                    <input type="tel" id="telepon" name="telepon" required>
-                </div>
                 <div class="form-group-right">
                     <label for="keperluan">Keperluan</label>
                     <input type="text" id="keperluan" name="keperluan" required>

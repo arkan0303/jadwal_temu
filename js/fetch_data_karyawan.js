@@ -43,13 +43,20 @@ function renderData(response) {
                     <td data-label="Telepon">${row.nomor_telepon}</td>
                     <td data-label="Email">${row.email}</td>
                     <td data-label="Department">${row.jabatan}</td>
+                    <td><button class="edit-karyawan" data-id="${
+                        row.id
+                    }" style="margin-right:8px" onclick="fetchOneKaryawan(event)">Edit</button><button class="hapus-karyawan decline" data-id="${
+                row.id
+            }" data-name="${
+                row.nama_karyawan
+            }" onclick="openDeleteModal(event)">Hapus</button></td>
                 </tr>
             `;
 
             dataContainer.append(rowData);
         });
     } else {
-        dataContainer.append(renderNotFoundData(6));
+        dataContainer.append(renderNotFoundData(8));
     }
 
     pagination.empty(); // Clear previous pagination

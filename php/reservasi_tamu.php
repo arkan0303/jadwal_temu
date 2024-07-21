@@ -6,7 +6,7 @@ include_once "../funcs/mailFuncs.php";
 $nama = mysqli_escape_string($conn, $_POST['nama']);
 $alamat = mysqli_escape_string($conn, $_POST['alamat']);
 $jenis_kelamin = mysqli_escape_string($conn, $_POST['jenis_kelamin']);
-$telepon = mysqli_escape_string($conn, $_POST['telepon']);
+$telepon = mysqli_escape_string($conn, $_POST['telepon']) ?? null;
 $karyawan = mysqli_escape_string($conn, $_POST['karyawan']);
 $keperluan = mysqli_escape_string($conn, $_POST['keperluan']);
 $jam = mysqli_escape_string($conn, $_POST['jam']);

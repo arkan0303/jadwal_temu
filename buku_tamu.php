@@ -21,33 +21,27 @@
     <?php include "./partials/_sidebar.php" ?>
     <!-- Sidebar -->
     <div>
-        <h1 class="b" style="">Buku Tamu</h1>
-        <div class="dropdown">
-                <button class="dropbtn">Rekapan Pengunjung</button>
-                <div class="dropdown-content">
-                    <a href="#" id="exportExcel">Excel</a>
-                    <a href="#" id="exportPdf">PDF</a>
-                </div>
-            </div>
-        <div class="con" style="">
-            <!-- <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
-                <button id="tambahDataBtn" style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;"><i class="fa-solid fa-plus"></i>Tambah Data</button>
-            </div> -->
-            
+        <h1 style="margin-left: 260px; margin-top: 40px; font-weight: bold; font-size: 40px">Buku Tamu</h1>
+        <div style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
             <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
-                    <p style="font-weight: bold; font-size: 20px; ">show</p>
-                    <select name="show" id="show" style="width: 60px; height: 30px; border-radius: 5px">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <p style="font-weight: bold; font-size: 20px; ">entries</p>
-                </div>
-                <div class="sss">
-                    <input type="text" id="search" name="search" class="sea" placeholder="Cari..." style="">
-                </div>
+                <button style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;" id="exportExcel"><i class="fa-solid fa-book"></i>&nbsp;Rekapan Data</button>
+            </div>
         </div>
+       <div  style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
+        <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
+                <p style="font-weight: bold; font-size: 20px; ">show</p>
+                <select name="show" id="show" style="width: 60px; height: 30px; border-radius: 5px">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <p style="font-weight: bold; font-size: 20px; ">entries</p>
+            </div>
+            <div>
+                <input type="text" id="search" name="search" placeholder="Cari..." style="width: 200px; height: 30px; border-radius: 5px; margin-left: 260px; margin-top: 10px; padding-left: 10px">
+            </div>
+       </div>
     </div>
     <div class="table-container">
         <table class="styled-table">
@@ -57,14 +51,13 @@
                     <th>Nama</th>
                     <th>Alamat</th>
                     <th>Jenis Kelamin</th>
-                    <th>Telepon</th>
                     <th>Bertemu Dengan</th>
                     <th>Keperluan</th>
                     <th>Jam Masuk</th>
                     <th>Tanggal</th>
                     <th>Jumlah Orang</th>
                     <th>Foto Tamu</th>
-                    <th colspan="2" class="text-center">Cetak</th>
+                    <th colspan="2" align="center">Aksi</th>
                 </tr>
             </thead>
             <tbody id="data-container">
@@ -98,38 +91,127 @@
         <a href="#">&raquo;</a> -->
     </div>
 
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <h2>Edit Buku Tamu</h2>
+            <div class="alert" style="display: none;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong id="message"></strong>
+            </div>
+            <form method="POST" id="form_edit_buku_tamu">
+                <label for="nama_tamu">Nama Tamu:</label>
+                <input type="text" id="nama_tamu" name="nama_tamu">
+                <label for="alamat">Alamat:</label>
+                <textarea type="text" id="alamat" name="alamat"></textarea>
+                <label for="jenis_kelamin">Jenis kelamin:</label>
+                <select name="jenis_kelamin" id="jenis_kelamin">
+                    <option value="l">Laki-laki</option>
+                    <option value="p">Perempuan</option>
+                </select>
+                <?php 
+                    $karyawanQuery = mysqli_query($conn, "SELECT id, nama_karyawan FROM karyawan ORDER BY id DESC");
+                ?>
+                <label for="karyawan_id">Nama Karyawan:</label>
+                <select name="karyawan_id" id="karyawan_id">
+                    <?php while($karyawanRow = mysqli_fetch_assoc($karyawanQuery)) : ?>
+                        <option value="<?= $karyawanRow['id']; ?>"><?= $karyawanRow['nama_karyawan']; ?></option>
+                    <?php endwhile; ?>
+                </select>
+                <label for="keperluan">Keperluan:</label>
+                <input type="text" id="keperluan" name="keperluan">
+                <label for="jam">Jam Masuk:</label>
+                <input type="time" id="jam" name="jam">
+                <label for="tanggal">Tanggal:</label>
+                <input type="date" id="tanggal" name="tanggal">
+                <label for="jumlah_orang">Jumlah Orang:</label>
+                <input type="text" id="jumlah_orang" name="jumlah_orang">
+                <label for="instansi">Instansi:</label>
+                <input type="text" id="instansi" name="instansi">
+                <img src="" alt="" id="img_foto" width="250" height="250">
+                <label for="foto">Foto:</label>
+                <input type="file" id="foto" name="foto">
+                <label for="email_pemohon">Email Pemohon:</label>
+                <input type="text" id="email_pemohon" name="email_pemohon">
+                <button type="submit">Ubah</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <h2>Hapus Data Buku Tamu</h2>
+            <div class="alert" style="display: none;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong id="message"></strong>
+            </div>
+            <h4>Apakah anda yakin ingin menghapus buku tamu <span id="deletion_name"></span>?</h4>
+            <form method="POST" id="form_delete_buku_tamu" style="display:flex;flex-direction:row !important;justify-content:end !important;gap:8px !important">
+                <button type="button" class="cancel" onclick="this.parentElement.parentElement.parentElement.style.display='none';">Batal</button>
+                <button type="submit" class="decline">Hapus</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/modal.js" defer></script>
+    <script src="./js/edit_delete_buku_tamu.js" defer></script>
     <script src="./js/table_reservasi_tamu.js" defer></script>
     <script>
-        // script.js
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropbtn = document.querySelector('.dropbtn');
-            const dropdown = document.querySelector('.dropdown');
-            
-            dropbtn.addEventListener('click', function() {
-                dropdown.classList.toggle('show');
-            });
+        document.getElementById('exportExcel').addEventListener('click', function() {
+            var button = this;
+            var originalText = button.innerHTML;
 
-            document.getElementById('exportExcel').addEventListener('click', function() {
-                window.location.href = 'php/export_excel.php';
-            });
+            button.innerHTML = "Loading...";
 
-            document.getElementById('exportPdf').addEventListener('click', function() {
-                window.location.href = 'php/export_pdf.php';
+            fetch('php/export_excel.php', {
+                method: 'POST' 
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'buku_tamu.xlsx'; // Set the desired file name
+                link.click();
+
+                // Reset button text to the original
+                button.innerHTML = originalText;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                button.innerHTML = originalText; // Reset button text in case of error
             });
-            
-            // Close the dropdown if the user clicks outside of it
-            window.onclick = function(event) {
-                if (!event.target.matches('.dropbtn')) {
-                    if (dropdown.classList.contains('show')) {
-                        dropdown.classList.remove('show');
-                    }
-                }
-            }
         });
+
+        // script.js
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const dropbtn = document.querySelector('.dropbtn');
+        //     const dropdown = document.querySelector('.dropdown');
+            
+        //     dropbtn.addEventListener('click', function() {
+        //         dropdown.classList.toggle('show');
+        //     });
+
+            
+
+        //     document.getElementById('exportPdf').addEventListener('click', function() {
+        //         window.location.href = 'php/export_pdf.php';
+        //     });
+            
+        //     // Close the dropdown if the user clicks outside of it
+        //     window.onclick = function(event) {
+        //         if (!event.target.matches('.dropbtn')) {
+        //             if (dropdown.classList.contains('show')) {
+        //                 dropdown.classList.remove('show');
+        //             }
+        //         }
+        //     }
+        // });
 
     </script>
 </html>

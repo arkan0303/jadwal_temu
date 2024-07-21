@@ -24,7 +24,7 @@
         <div class="content">
             <h1>Dashboard Admin</h1>
             <p><?= get_current_date(); ?></p>
-            <div style="display: flex; border-bottom: 1px solid #ccc; gap: 20px; margin-top: 35px;">
+            <div style="display: flex; border-bottom: 1px solid #ccc; margin-top: 35px;">
                 <div class="container-cards">
                     <div class="card card-total-tamu">
                         <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -47,9 +47,9 @@
                         </div>
                         <div class="card-title">Jadwal janji temu</div>
                     </div>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <i id="refreshButton" class="fa-solid fa-arrows-rotate refresh-button"></i>
+                    <div style="margin-top: 2rem;">
+                        <i id="refreshButton" class="fa-solid fa-arrows-rotate refresh-button"></i>
+                    </div>
                 </div>
             </div>
         </div>

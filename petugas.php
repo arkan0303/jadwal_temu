@@ -50,6 +50,7 @@
                     <th>Shift</th>
                     <th>No Telepon</th>
                     <th>Email</th>
+                    <th colspan="2" align="center">Aksi</th>
                 </tr>
             </thead>
             <tbody id="data-container">
@@ -77,13 +78,59 @@
         <a href="#">&raquo;</a> -->
     </div>
 
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <h2>Edit Data Petugas</h2>
+            <div class="alert" style="display: none;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong id="message"></strong>
+            </div>
+            <form method="POST" id="form_edit_petugas">
+                <label for="nama">Nama Petugas:</label>
+                <input type="text" id="nama" name="nama">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <label for="shift">Shift:</label>
+                <input type="text" id="shift" name="shift">
+                <label for="nip">NIP:</label>
+                <input type="text" id="nip" name="nip">
+                <label for="telpon">No Telepon:</label>
+                <input type="text" id="telpon" name="telpon">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <label for="alamat">Alamat:</label>
+                <textarea name="alamat" id="alamat" rows="5"></textarea>
+                <button type="submit">Ubah</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <h2>Hapus Data Petugas</h2>
+            <div class="alert" style="display: none;">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                <strong id="message"></strong>
+            </div>
+            <h4>Apakah anda yakin ingin menghapus <span id="deletion_name"></span>?</h4>
+            <form method="POST" id="form_delete_petugas" style="display:flex;flex-direction:row !important;justify-content:end !important;gap:8px !important">
+                <button type="button" class="cancel" onclick="this.parentElement.parentElement.parentElement.style.display='none';">Batal</button>
+                <button type="submit" class="decline">Hapus</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
             <h2>Tambah Data Petugas</h2>
             <div class="alert" style="display: none;">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
                 <strong id="message"></strong>
             </div>
             <form method="POST" id="form_tambah_petugas">
@@ -91,9 +138,6 @@
                 <input type="text" id="nama" name="nama">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
-                <span id="showPassword" onclick="togglePassword(this, 'password')">Show</span>
                 <label for="shift">Shift:</label>
                 <input type="text" id="shift" name="shift">
                 <label for="nip">NIP:</label>
@@ -112,8 +156,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/modal.js" defer></script>
     <script src="./js/form_util.js"></script>
-    <script src="./js/tambah_petugas.js" defer></script>
-    <script src="./js/fetch_data_petugas.js"></script>
+    <script src="./js/petugas.js" defer></script>
+    <script src="./js/fetch_data_petugas.js" defer></script>
 </body>
 
 </html>
