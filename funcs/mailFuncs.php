@@ -21,7 +21,7 @@ function sendEmail($type, $to, $name, $additionalData = []) {
         $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
         $mail->SMTPAuth = true; // Enable SMTP authentication
         $mail->Username = 'ramyabyyu907@gmail.com'; // SMTP username
-        $mail->Password = 'ajgzoazajjrknrum'; // SMTP password (use app-specific password)
+        $mail->Password = 'vquxgwcywxwncyjo'; // SMTP password (use app-specific password)
         $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587; // TCP port to connect to
 

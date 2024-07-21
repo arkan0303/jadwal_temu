@@ -59,7 +59,7 @@
                         <th>Tanggal</th>
                         <th>Jumlah Orang</th>
                         <th>Foto Tamu</th>
-                        <th colspan="2" class="text-center">Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="data-container">

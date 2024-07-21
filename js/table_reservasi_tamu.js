@@ -230,13 +230,35 @@ function renderActionRow(id, name = null) {
     const reservation = getReservationType();
 
     if (reservation === JANJI_TEMU_RESERVATION_TYPE) {
-        result = `<td data-label="Edit"><button data-id="${id}" onclick="confirmationModal(${id}, true)">Setujui</button></td>
-                    <td data-label="Hapus"><button class="decline" data-id="${id}" onclick="confirmationModal(${id}, false)">Tolak</button></td>`;
+        // result = `<td data-label="Edit"><button data-id="${id}" onclick="confirmationModal(${id}, true)">Setujui</button></td>
+        //             <td data-label="Hapus"><button class="decline" data-id="${id}" onclick="confirmationModal(${id}, false)">Tolak</button></td>`;
+        result = `<td> <button data-id="${id}" onclick="sendWa(this);">Hubungi</button> </td>`;
     } else {
         result = `<td style="display:flex;align-items:center;gap:5px"> <button data-id="${id}" onclick="fetchOneBukuTamu(event)">Edit</button> <button class="decline" data-name="${name}" data-id="${id}" onclick="openDeleteModal(event)">Hapus</button> </td>`;
     }
 
     return result;
+}
+
+function sendWa(button) {
+    var row = button.parentNode.parentNode;
+    var id = button.getAttribute('data-id');
+
+    var namaKaryawan = row.cells[6].innerText;
+    var namaTamu = row.cells[1].innerText;
+    var tanggal = row.cells[9].innerText;
+    var jam = row.cells[8].innerText;
+    var keperluan = row.cells[7].innerText;
+    var phoneNumber = row.cells[5].innerText;
+
+    if (phoneNumber.startsWith('08')) {
+        phoneNumber = '+62' + phoneNumber.substring(1);
+    }
+
+    var message = `Hallo ${namaKaryawan}, kami menerima permintaan perjanjian janji temu dengan Anda. Dengan nama tamu ${namaTamu} pada ${tanggal} jam ${jam} WIB dengan keperluan ${keperluan}\nhttp://localhost:4000/detail-janji-temu.php?id=${id}`;
+    var whatsappUrl =
+        'https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message);
+    window.location.href = whatsappUrl;
 }
 
 // Function for approval modal
@@ -309,26 +331,26 @@ function appointmentApproval(id, isApprove) {
             $('#confirm_modal').css('display', 'none');
             loadData(currentPage);
 
-            if (isApprove) {
-                // Fetch phone number and convert to international format if needed
-                var phoneNumber = response.phone; // Replace with your input ID
-                var namaKaryawan = response.nama_karyawan;
-                var namaTamu = response.nama_tamu;
-                var tanggal = response.tanggal;
-                var jam = response.jam;
-                var keperluan = response.keperluan;
-                if (phoneNumber.startsWith('08')) {
-                    phoneNumber = '+62' + phoneNumber.substring(1);
-                }
+            // if (isApprove) {
+            //     // Fetch phone number and convert to international format if needed
+            //     var phoneNumber = response.phone; // Replace with your input ID
+            //     var namaKaryawan = response.nama_karyawan;
+            //     var namaTamu = response.nama_tamu;
+            //     var tanggal = response.tanggal;
+            //     var jam = response.jam;
+            //     var keperluan = response.keperluan;
+            //     if (phoneNumber.startsWith('08')) {
+            //         phoneNumber = '+62' + phoneNumber.substring(1);
+            //     }
 
-                var message = `Hallo ${namaKaryawan}, kami menerima permintaan perjanjian janji temu dengan Anda. Dengan nama tamu ${namaTamu} pada ${tanggal} jam ${jam} WIB dengan keperluan ${keperluan}`;
-                var whatsappUrl =
-                    'https://wa.me/' +
-                    phoneNumber +
-                    '?text=' +
-                    encodeURIComponent(message);
-                window.location.href = whatsappUrl;
-            }
+            //     var message = `Hallo ${namaKaryawan}, kami menerima permintaan perjanjian janji temu dengan Anda. Dengan nama tamu ${namaTamu} pada ${tanggal} jam ${jam} WIB dengan keperluan ${keperluan}`;
+            //     var whatsappUrl =
+            //         'https://wa.me/' +
+            //         phoneNumber +
+            //         '?text=' +
+            //         encodeURIComponent(message);
+            //     window.location.href = whatsappUrl;
+            // }
         },
         error: function () {
             $('#confirm_button, #cancel_button').prop('disabled', false);
