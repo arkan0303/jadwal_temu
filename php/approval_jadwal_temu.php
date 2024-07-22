@@ -23,7 +23,7 @@ if ($approval_status == 'true') {
                                             rt.jenis_kelamin, 
                                             rt.nomor_telepon, 
                                             rt.keperluan, 
-                                            rt.jam, 
+                                            rt.jam_janji, 
                                             rt.tanggal, 
                                             rt.jumlah_orang, 
                                             rt.instansi, 
@@ -47,7 +47,7 @@ if ($approval_status == 'true') {
             'jenisKelamin' => $getOneRes['jenis_kelamin'],
             'phone' => $getOneRes['nomor_telepon'],
             'keperluan' => $getOneRes['keperluan'],
-            'jam' => $getOneRes['jam'],
+            'jam' => $getOneRes['jam_janji'],
             'jumlahOrang' => $getOneRes['jumlah_orang'],
         ];
         sendEmail(APPROVED_EMAIL, $getOneRes['email_pemohon'], $getOneRes['nama_tamu'], $additionalData);
@@ -56,7 +56,7 @@ if ($approval_status == 'true') {
                             'phone' => $getOneRes['kary_nomor_telepon'],
                             'nama_tamu' => $getOneRes['nama_tamu'],
                             'tanggal' => $getOneRes['tanggal'],
-                            'jam' => $getOneRes['jam'],
+                            'jam' => $getOneRes['jam_janji'],
                             'keperluan' => $getOneRes['keperluan']
                         ]);
         exit;

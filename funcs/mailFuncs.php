@@ -9,7 +9,7 @@ const SUCCESS_EMAIL = "success_email";
 const APPROVED_EMAIL = "approved_email";
 const DECLINED_EMAIL = "declined_email";
 
-function sendEmail($type, $to, $name, $additionalData = []) {
+function sendEmail($type, $to, $name, $additionalData = [], $rev_type = '') {
     $mail = new PHPMailer(true);
 
     $from = "ramyabyyu907@gmail.com";
@@ -25,7 +25,7 @@ function sendEmail($type, $to, $name, $additionalData = []) {
         $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587; // TCP port to connect to
 
-        $message = getMessage($type, $to, $name, $additionalData);
+        $message = getMessage($type, $to, $name, $additionalData, $rev_type);
 
         // Sender
         $mail->setFrom($from, 'Ramy Abyyu');
@@ -48,14 +48,14 @@ function sendEmail($type, $to, $name, $additionalData = []) {
     }
 }
 
-function getMessage($type, $to, $name, $additionalData = []) {
+function getMessage($type, $to, $name, $additionalData = [], $rev_type = '') {
     switch ($type) {
         case SUCCESS_EMAIL:
-            $subject = "Terima Kasih Telah Melakukan Janji Temu";
+            $subject = "Terima Kasih Telah Melakukan $rev_type";
+            $rev_type = strtolower($rev_type);
             $body = "
             <html>
             <body>
-            <img src='../images/logo.png' alt='Logo PLN' />
             <p>Balikpapan, " . date('d m Y') . "</p>
             <p>Kepada YTH: $name</p>
             <p>Dengan hormat,</p>

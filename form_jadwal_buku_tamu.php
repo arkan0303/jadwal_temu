@@ -53,28 +53,31 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group-right">
+                <div class="form-group-left">
                     <label for="keperluan">Keperluan</label>
                     <input type="text" id="keperluan" name="keperluan" required>
                 </div>
+                <div class="form-group-right">
+                    <label for="nomor_telepon">Nomor Telp Tamu</label>
+                    <input type="text" id="nomor_telepon" name="nomor_telepon" required>
+                </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group-left">
-                    <label for="jam">Jam Janji</label>
-                    <input type="time" id="jam" name="jam" required>
-                </div>
-
-                <div class="form-group-right">
-                    <label for="tanggal">Tanggal Janji</label>
+                    <label for="tanggal">Tanggal Masuk</label>
                     <input type="date" id="tanggal" name="tanggal" required>
                 </div>
+                <div class="form-group-right">
+                    <label for="jumlah_orang">Jumlah Orang </label>
+                    <input type="number" step="1" min="1" id="jumlah_orang" name="jumlah_orang" required>
+                </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group-left">
-                    <label for="jumlah_orang">Jumlah Orang </label>
-                    <input type="number" step="1" min="1" id="jumlah_orang" name="jumlah_orang" required>
+                    <label for="photo">Photo</label>
+                    <input type="file" id="photo" name="photo" required class="file">
                 </div>
 
                 <div class="form-group-right">
@@ -84,10 +87,6 @@
 
             </div>
             <div class="form-row">
-                <div class="form-group-left">
-                    <label for="photo">Photo</label>
-                    <input type="file" id="photo" name="photo" required class="file">
-                </div>
                 <div class="form-group-right">
                     <label for="photo">Instansi</label>
                     <input type="text" id="instansi" name="instansi" required>
@@ -95,7 +94,7 @@
             </div>
             <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px">
                 <button class="send" type="submit">send</button>
-                <button class="cancel" type="button">cancel</button>
+                <button class="cancel" type="reset">cancel</button>
             </div>
         </form>
     </div>

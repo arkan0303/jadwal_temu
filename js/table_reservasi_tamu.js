@@ -74,7 +74,6 @@ function renderData(type, response) {
                             row.nama_karyawan
                         }</td>
                         <td data-label="Keperluan">${row.keperluan}</td>
-                        <td data-label="Jam Masuk">${row.jam}</td>
                         <td data-label="Tanggal">${appointmentDate}</td>
                         <td data-label="Jumlah Orang">${row.jumlah_orang}</td>
                         <td data-label="Foto Tamu"><img src="${
@@ -104,16 +103,18 @@ function renderData(type, response) {
                                 ? 'Laki-laki'
                                 : 'Perempuan'
                         }</td>
-                        <td data-label="Bertemu Dengan">${
-                            row.nama_karyawan
+                        <td data-label="Nomor Telp Tamu">${
+                            row.nomor_telepon
                         }</td>
+                        <td data-label="Nama Karyawan">${row.nama_karyawan}</td>
                         <td data-label="Keperluan">${row.keperluan}</td>
-                        <td data-label="Jam Masuk">${row.jam}</td>
-                        <td data-label="Tanggal">${appointmentDate}</td>
-                        <td data-label="Jumlah Orang">${row.jumlah_orang}</td>
-                        <td data-label="Foto Tamu"><img src="${
-                            row.foto
-                        }" alt="Foto Tamu"></td>
+                        <td data-label="Jam Janji">${row.jam_janji.substring(
+                            0,
+                            5
+                        )}</td>
+                        <td data-label="Jam Janji">${
+                            row.jam_masuk ? row.jam_masuk.substring(0, 5) : ''
+                        }</td>
                         ${renderActionRow(row.id, row.nama_tamu)}
                     </tr>
                 `;
@@ -232,7 +233,9 @@ function renderActionRow(id, name = null) {
     if (reservation === JANJI_TEMU_RESERVATION_TYPE) {
         // result = `<td data-label="Edit"><button data-id="${id}" onclick="confirmationModal(${id}, true)">Setujui</button></td>
         //             <td data-label="Hapus"><button class="decline" data-id="${id}" onclick="confirmationModal(${id}, false)">Tolak</button></td>`;
-        result = `<td> <button data-id="${id}" onclick="sendWa(this);">Hubungi</button> </td>`;
+        result = `<td style="display:flex;align-items:center;gap:5px"> <button class="warning" data-id="${id}" onclick="sendWa(this);">Hubungi</button>
+                         <button data-id="${id}" onclick="confirmationModal(${id}, true)">Setujui</button> 
+                         <button class="decline" data-id="${id}" onclick="confirmationModal(${id}, false)">Tolak</button></td>`;
     } else {
         result = `<td style="display:flex;align-items:center;gap:5px"> <button data-id="${id}" onclick="fetchOneBukuTamu(event)">Edit</button> <button class="decline" data-name="${name}" data-id="${id}" onclick="openDeleteModal(event)">Hapus</button> </td>`;
     }
@@ -263,9 +266,9 @@ function sendWa(button) {
 
 // Function for approval modal
 function confirmationModal(id, apprStatus) {
-    const confirmText = document.getElementById('confirm_text');
-    const confirmBtn = document.getElementById('confirm_button');
-    const cancelBtn = document.getElementById('cancel_button');
+    const confirmText = document.querySelector('#confirm_modal #confirm_text');
+    const confirmBtn = document.querySelector('#confirm_modal #confirm_button');
+    const cancelBtn = document.querySelector('#confirm_modal #cancel_button');
 
     const modal = document.getElementById('confirm_modal');
 
@@ -285,18 +288,23 @@ function confirmationModal(id, apprStatus) {
 
     if (!apprStatus) {
         confirmBtn.classList.add('decline');
-        document.getElementById('form_alasan_penolakan').style.display =
-            'block';
+        document.querySelector(
+            '#confirm_modal #form_alasan_penolakan'
+        ).style.display = 'block';
+        document.querySelector(
+            '#confirm_modal #form_edit_jadwal_janji__'
+        ).style.display = 'none';
     } else {
         confirmBtn.classList.remove('decline');
-        document.getElementById('form_alasan_penolakan').style.display = 'none';
+        document.querySelector(
+            '#confirm_modal #form_alasan_penolakan'
+        ).style.display = 'none';
+        document.querySelector(
+            '#confirm_modal #form_edit_jadwal_janji__'
+        ).style.display = 'block';
     }
 
     cancelBtn.onclick = () => {
-        modal.style.display = 'none';
-    };
-
-    document.getElementsByClassName('close')[0].onclick = () => {
         modal.style.display = 'none';
     };
 
@@ -312,7 +320,10 @@ function renderNotFoundData(colspan) {
 }
 
 function appointmentApproval(id, isApprove) {
-    $('#confirm_button, #cancel_button').prop('disabled', true);
+    $('#confirm_modal #confirm_button, #confirm_modal #cancel_button').prop(
+        'disabled',
+        true
+    );
     $.ajax({
         url: '/php/approval_jadwal_temu.php',
         type: 'POST',
@@ -320,8 +331,12 @@ function appointmentApproval(id, isApprove) {
         data: {
             approval_status: isApprove,
             id: parseInt(id),
-            reject_reason: isApprove ? '' : $('#alasan_penolakan').val(),
-            suggested_date: isApprove ? '' : $('#suggested_date').val(),
+            reject_reason: isApprove
+                ? ''
+                : $('#confirm_modal #alasan_penolakan').val(),
+            suggested_date: isApprove
+                ? ''
+                : $('#confirm_modal #suggested_date').val(),
         },
         success: function (response) {
             $('.alert').css('display', 'block');

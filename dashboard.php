@@ -5,10 +5,9 @@
     include_once "./funcs/guardFuncs.php";
 
     checkAuth();
-    checkRole($conn, "Admin", getUniqueId());
 
     $pageTitle = "Dashboard";
-    $cssFiles = ["css/dashboard.css", "css/jadwal_janji.css"];
+    $cssFiles = ["css/dashboard.css", "css/jadwal_janji.css", "/css/modal.css"];
     $additionalLinks = ['<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />'];
 
     include "./layouts/header.php";

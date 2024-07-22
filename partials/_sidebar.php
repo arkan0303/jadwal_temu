@@ -11,13 +11,37 @@
         return $_SERVER['REQUEST_URI'] === $uri ? "active" : "";
     }
 
+    
+
     $unique_id = getUniqueId();
-    $query = mysqli_query($conn, "SELECT nama_admin AS nama_pengguna FROM admin WHERE unique_id = '$unique_id'
+    $query = mysqli_query($conn, "SELECT nama_admin AS nama_pengguna, role FROM admin WHERE unique_id = '$unique_id'
                                 UNION
-                                SELECT nama_karyawan AS nama_pengguna FROM karyawan WHERE unique_id = '$unique_id'
+                                SELECT nama_karyawan AS nama_pengguna, role FROM karyawan WHERE unique_id = '$unique_id'
                                 UNION
-                                SELECT nama_petugas AS nama_pengguna FROM petugas WHERE unique_id = '$unique_id'");
+                                SELECT nama_petugas AS nama_pengguna, role FROM petugas WHERE unique_id = '$unique_id'");
     $row = mysqli_fetch_assoc($query);
+
+    function getDisplayByRole($roles) {
+        global $row;
+
+        $display = "";
+
+        if (is_array($roles)) {
+            if (in_array($row['role'], $roles)) {
+                $display = "flex";
+            } else {
+                $display = "none";
+            }
+        } else {
+            if ($row['role'] === $roles) {
+                $display = "flex";
+            } else {
+                $display = "none";
+            }
+        }
+
+        return $display;
+    }
 ?>
 
 <div class="sidebar">
@@ -34,25 +58,25 @@
             </div>
             <li style="margin-top: 8px; font-size: 20px; font-weight: bold"><a href="dashboard.php">Dashboard</a></li>
         </div>
-        <div class="menu <?= checkURI(JADWAL_JANJI); ?>" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
+        <div class="menu <?= checkURI(JADWAL_JANJI); ?>" style="display: <?= getDisplayByRole(["admin", "karyawan"]); ?>; gap: 10px; padding-left: 10px; border-radius: 10px">
             <div>
                 <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-calendar-days"></i>
             </div>
             <li style="margin-top: 8px; font-size: 20px; font-weight: bold"><a href="jadwal_janji.php">Jadwal Janji</a></li>
         </div>
-        <div class="menu <?= checkURI(BUKU_TAMU); ?>" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
+        <div class="menu <?= checkURI(BUKU_TAMU); ?>" style="display: <?= getDisplayByRole(["admin", "petugas"]); ?>; gap: 10px; padding-left: 10px; border-radius: 10px">
             <div>
                 <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-book-bookmark"></i>
             </div>
             <li style="margin-top: 8px; font-size: 20px; font-weight: bold"><a href="buku_tamu.php">Buku Tamu</a></li>
         </div>
-        <div class="menu <?= checkURI(KARYAWAN); ?>" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
+        <div class="menu <?= checkURI(KARYAWAN); ?>" style="display: <?= getDisplayByRole("admin"); ?>; gap: 10px; padding-left: 10px; border-radius: 10px">
             <div>
                 <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-user-tie"></i>
             </div>
             <li style="margin-top: 8px; font-size: 20px; font-weight: bold"><a href="karyawan.php">Karyawan</a></li>
         </div>
-        <div class="menu <?= checkURI(PETUGAS); ?>" style="display: flex; gap: 10px; padding-left: 10px; border-radius: 10px">
+        <div class="menu <?= checkURI(PETUGAS); ?>" style="display: <?= getDisplayByRole("admin"); ?>; gap: 10px; padding-left: 10px; border-radius: 10px">
             <div>
                 <i style="font-size: 30px; margin-top: 8px;" class="fa-solid fa-print"></i>
             </div>

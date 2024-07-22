@@ -5,7 +5,7 @@
     include_once "./funcs/guardFuncs.php";
 
     checkAuth();
-    checkRole($conn, "Admin", getUniqueId());
+    checkRole($conn, ["Admin", "Karyawan"], getUniqueId());
 
     $pageTitle = "Jadwal Janji";
     $cssFiles = ["css/jadwal_janji.css", "css/dashboard.css", "css/badge.css", "css/alert.css", "css/modal.css"];
@@ -55,7 +55,6 @@
                         <th>Telepon</th>
                         <th>Bertemu Dengan</th>
                         <th>Keperluan</th>
-                        <th>Jam Masuk</th>
                         <th>Tanggal</th>
                         <th>Jumlah Orang</th>
                         <th>Foto Tamu</th>
@@ -96,14 +95,15 @@
 
     <div id="confirm_modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h4 id="confirm_text"></h4>
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+            <h4 id="confirm_text" style="color:#222"></h4>
             <form style="margin-bottom: 15px;padding: 10px" id="form_alasan_penolakan">
-                <label for="alasan_penolakan">Alasan Penolakan</label>
-                <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3" cols="68" style="font-family: arial"></textarea>
-                <label for="suggested_date">Rekomendasi Pengajuan Kembali</label><br>
-                <input type="date" name="suggested_date" id="suggested_date" style="width: 97.5%; font-family: arial;">
+                <label for="alasan_penolakan"style="color:#222">Alasan Penolakan</label>
+                <textarea name="alasan_penolakan" id="alasan_penolakan" rows="3" cols="68" style="font-family: arial;color:#222"></textarea>
+                <label for="suggested_date"style="color:#222">Rekomendasi Pengajuan Kembali</label><br>
+                <input type="date" name="suggested_date" id="suggested_date" style="width: 97.5%; font-family: arial;color:#222">
             </form>
+            <form style="margin-bottom: 15px;padding: 10px" id="form_edit_jadwal_janji__"></form>
             <button type="button" id="confirm_button"></button>
             <button type="button" id="cancel_button">Batal</button>
         </div>

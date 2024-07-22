@@ -19,14 +19,14 @@ $response = [
     'jenis_kelamin' => $row['jenis_kelamin'],
     'karyawan_id' => $row['karyawan_id'],
     'nomor_telepon' => $row['nomor_telepon'],
-    'jam' => $row['jam'],
     'tanggal' => $row['tanggal'],
     'jumlah_orang' => $row['jumlah_orang'],
     'instansi' => $row['instansi'],
     'foto'=> $row['foto'],
     'email_pemohon' => $row['email_pemohon'],
     'keperluan' => $row['keperluan'],
-    'id' => $row['id']
+    'id' => $row['id'],
+    'jam_janji' => $row['jam_janji']
 ];
 
 echo json_encode($response);

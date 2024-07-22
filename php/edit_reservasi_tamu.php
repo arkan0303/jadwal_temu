@@ -13,7 +13,7 @@ $alamat = $conn->escape_string($_POST['alamat']);
 $jenis_kelamin = $conn->escape_string($_POST['jenis_kelamin']);
 $karyawan_id = $conn->escape_string($_POST['karyawan_id']);
 $keperluan = $conn->escape_string($_POST['keperluan']);
-$jam = $conn->escape_string($_POST['jam']);
+$jam_masuk = $conn->escape_string($_POST['jam_masuk']);
 $tanggal = $conn->escape_string($_POST['tanggal']);
 $jumlah_orang = $conn->escape_string($_POST['jumlah_orang']);
 $instansi = $conn->escape_string($_POST['instansi']);
@@ -57,7 +57,7 @@ $stmt = $conn->prepare("UPDATE reservasi_tamu
                             jenis_kelamin = ?,
                             karyawan_id = ?,
                             keperluan = ?,
-                            jam = ?,
+                            jam_masuk = ?,
                             tanggal = ?,
                             jumlah_orang = ?,
                             instansi = ?,
@@ -67,7 +67,7 @@ $stmt = $conn->prepare("UPDATE reservasi_tamu
                             id = ?
                         ");
 $stmt->bind_param("sssssssisssi", $nama_tamu, $alamat, $jenis_kelamin, $karyawan_id, 
-$keperluan, $jam, $tanggal, $jumlah_orang, $instansi, $uploadPath, $email_pemohon, $id);
+$keperluan, $jam_masuk, $tanggal, $jumlah_orang, $instansi, $uploadPath, $email_pemohon, $id);
 
 $stmt->execute();
 

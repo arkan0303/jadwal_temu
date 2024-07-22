@@ -34,7 +34,8 @@ function renderFetchOneBukuTamu(response) {
         response.karyawan_id;
     formEdit.querySelector("input[name='keperluan']").value =
         response.keperluan;
-    formEdit.querySelector("input[name='jam']").value = response.jam;
+    formEdit.querySelector("input[name='jam_janji']").value =
+        response.jam_janji;
     formEdit.querySelector("input[name='tanggal']").value = response.tanggal;
     formEdit.querySelector("input[name='instansi']").value = response.instansi;
     formEdit.querySelector("input[name='email_pemohon']").value =

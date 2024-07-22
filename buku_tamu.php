@@ -5,7 +5,7 @@
     include_once "./funcs/guardFuncs.php";
 
     checkAuth();
-    checkRole($conn, "Admin", getUniqueId());
+    checkRole($conn, ["Admin", "Petugas"], getUniqueId());
 
     $pageTitle = "Buku Tamu";
     $cssFiles = ["css/jadwal_janji.css", "css/dashboard.css", "css/badge.css", "css/alert.css", "css/modal.css", "css/buku_tamu.css"];
@@ -24,7 +24,7 @@
         <h1 style="margin-left: 260px; margin-top: 40px; font-weight: bold; font-size: 40px">Buku Tamu</h1>
         <div style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
             <div style=" display: flex; gap: 10px; align-items: center; margin-top: 10px">
-                <button style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;" id="exportExcel"><i class="fa-solid fa-book"></i>&nbsp;Rekapan Data</button>
+                <button style=" width: 200px; height: 30px; border-radius: 5px;cursor:pointer;" class="export" onclick="document.getElementById('export_modal').style.display='block'"><i class="fa-solid fa-book"></i>&nbsp;Rekapan Data</button>
             </div>
         </div>
        <div  style="width : 1000px; display: flex; align-items: center; justify-content: space-between; margin-left: 260px; margin-top: 10px ">
@@ -48,15 +48,14 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama</th>
+                    <th>Nama Tamu</th>
                     <th>Alamat</th>
                     <th>Jenis Kelamin</th>
-                    <th>Bertemu Dengan</th>
+                    <th>No Telp Tamu</th>
+                    <th>Nama Karyawan</th>
                     <th>Keperluan</th>
+                    <th>Jam Janji</th>
                     <th>Jam Masuk</th>
-                    <th>Tanggal</th>
-                    <th>Jumlah Orang</th>
-                    <th>Foto Tamu</th>
                     <th colspan="2" align="center">Aksi</th>
                 </tr>
             </thead>
@@ -91,6 +90,22 @@
         <a href="#">&raquo;</a> -->
     </div>
 
+    <!-- Export Excel Modal -->
+    <div id="export_modal" class="modal">
+        <div class="modal-content">
+        <span class="close" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+        <div>
+            <h3>Pilih Jangka Waktu Rekapan</h3>
+            <select name="interval" id="interval">
+                <option value="1">1 Bulan</option>
+                <option value="3">3 Bulan</option>
+            </select>
+            <button id="exportExcel">Export</button>
+            <button class="cancel" onclick="this.parentElement.parentElement.parentElement.style.display='none';">Batal</button>
+        </div>
+        </div>
+    </div>
+
     <!-- Edit Modal -->
     <div id="editModal" class="modal">
         <div class="modal-content">
@@ -121,8 +136,10 @@
                 </select>
                 <label for="keperluan">Keperluan:</label>
                 <input type="text" id="keperluan" name="keperluan">
-                <label for="jam">Jam Masuk:</label>
-                <input type="time" id="jam" name="jam">
+                <label for="jam_janji">Jam Janji:</label>
+                <input type="time" id="jam_janji" name="jam_janji">
+                <label for="jam_masuk">Jam Masuk:</label>
+                <input type="time" id="jam_masuk" name="jam_masuk">
                 <label for="tanggal">Tanggal:</label>
                 <input type="date" id="tanggal" name="tanggal">
                 <label for="jumlah_orang">Jumlah Orang:</label>
@@ -170,7 +187,11 @@
             button.innerHTML = "Loading...";
 
             fetch('php/export_excel.php', {
-                method: 'POST' 
+                headers: {
+                    'Content-Type': 'application/json' // Use application/json for JSON data
+                },
+                method: 'POST',
+                body: JSON.stringify({ interval: document.querySelector("#export_modal #interval").value })
             })
             .then(response => response.blob())
             .then(blob => {

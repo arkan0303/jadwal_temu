@@ -54,13 +54,15 @@
 
             <div class="form-row">
                 <div class="form-group-left">
-                    <label for="telepon">No Hp Karyawan yang Dituju</label>
-                    <input type="tel" id="telepon" name="telepon" required>
-                </div>
-                <div class="form-group-right">
                     <label for="keperluan">Keperluan</label>
                     <input type="text" id="keperluan" name="keperluan" required>
                 </div>
+
+                <div class="form-group-left">
+                    <label for="nomor_telepon">No Telp Tamu</label>
+                    <input type="text" id="nomor_telepon" name="nomor_telepon" required>
+                </div>
+                
             </div>
 
             <div class="form-row">
@@ -80,12 +82,10 @@
                     <label for="jumlah_orang">Jumlah Orang </label>
                     <input type="number" step="1" min="1" id="jumlah_orang" name="jumlah_orang" required>
                 </div>
-
                 <div class="form-group-right">
                     <label for="email">Email Anda</label>
                     <input type="email" id="email" name="email" required>
                 </div>
-
             </div>
             <div class="form-row">
                 <div class="form-group-left">
@@ -99,7 +99,7 @@
             </div>
             <div style="margin-top: 10px; display: flex; justify-content: center; gap: 20px">
                 <button class="send" type="submit">send</button>
-                <button class="cancel" type="button">cancel</button>
+                <button class="cancel" type="reset">cancel</button>
             </div>
         </form>
     </div>

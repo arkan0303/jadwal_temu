@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="./images/logo.jpg">
     <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="css/buttons.css">
     <?php
         // Include CSS files if any are provided
         if (!empty($cssFiles)) {

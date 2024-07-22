@@ -6,10 +6,10 @@ include_once "../funcs/mailFuncs.php";
 $nama = mysqli_escape_string($conn, $_POST['nama']);
 $alamat = mysqli_escape_string($conn, $_POST['alamat']);
 $jenis_kelamin = mysqli_escape_string($conn, $_POST['jenis_kelamin']);
-$telepon = mysqli_escape_string($conn, $_POST['telepon']) ?? null;
 $karyawan = mysqli_escape_string($conn, $_POST['karyawan']);
 $keperluan = mysqli_escape_string($conn, $_POST['keperluan']);
-$jam = mysqli_escape_string($conn, $_POST['jam']);
+$phone = mysqli_escape_string($conn, $_POST['nomor_telepon']);
+$jam = mysqli_escape_string($conn, $_POST['jam']) ?? null;
 $tanggal = mysqli_escape_string($conn, $_POST['tanggal']);
 $jumlah_orang = mysqli_escape_string($conn, $_POST['jumlah_orang']);
 $email = mysqli_escape_string($conn, $_POST['email']);
@@ -45,17 +45,32 @@ if (!move_uploaded_file($photo['tmp_name'], $uploadPath)) {
 
 $uploadPath = "php/".$uploadPath;
 
+$fields = "";
+$values = "";
+
+if ($jenis_reservasi === 'buku_tamu') {
+    $fields = "(nama_tamu, alamat, jenis_kelamin, karyawan_id, keperluan, nomor_telepon, tanggal, jumlah_orang, instansi, email_pemohon, foto, jenis_reservasi)";
+    $values = "('$nama', '$alamat', '$jenis_kelamin', $karyawan, '$keperluan', '$phone', '$tanggal', $jumlah_orang, '$instansi', '$email', '$uploadPath', 'buku_tamu');";
+} else if ($jenis_reservasi === 'janji_temu') {
+    $fields = "(nama_tamu, alamat, jenis_kelamin, karyawan_id, keperluan, nomor_telepon, tanggal, jam_janji, jumlah_orang, instansi, email_pemohon, foto, jenis_reservasi)";
+    $values = "('$nama', '$alamat', '$jenis_kelamin', $karyawan, '$keperluan', '$phone','$tanggal', '$jam', $jumlah_orang, '$instansi', '$email', '$uploadPath', 'janji_temu');";
+} else {
+    echo "Invalid jeni reservasi";
+    exit;
+}
+
 $sql = "INSERT INTO reservasi_tamu 
-        (nama_tamu, alamat, jenis_kelamin, nomor_telepon, karyawan_id, keperluan, jam, tanggal, jumlah_orang, instansi, email_pemohon, foto, jenis_reservasi) 
+        $fields
         VALUES 
-        ('$nama', '$alamat', '$jenis_kelamin', '$telepon', $karyawan, '$keperluan', '$jam', '$tanggal', $jumlah_orang, '$instansi', '$email', '$uploadPath', '$jenis_reservasi');
+        $values
 ";
 
 $query = mysqli_query($conn, $sql);
 
 if ($query) {
     try {
-        sendEmail(SUCCESS_EMAIL, $email, $nama);
+        $rev_type = $jenis_reservasi === 'buku_tamu' ? 'Pengisian Buku Tamu' : 'Jadwal Janji Temu';
+        sendEmail(SUCCESS_EMAIL, $email, $nama, [], $rev_type);
     } catch (Exception $e) {
         throw $e;
     }
